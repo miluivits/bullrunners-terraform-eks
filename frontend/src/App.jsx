@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import Main from "./components/Main/Main";
-import SignIn from "./components/Sign-in-up/SignIn";
-import SignUp from "./components/Sign-in-up/SignUp";
-import MyProfile from "./components/Navbar/MyProfile";
-import ChosenToken from "./components/TokenInfo/ChosenToken";
+import Main from "./pages/Main";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Profile from "./pages/Profile";
+import ChosenToken from "./pages/ChosenToken";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Main />} />   
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<MyProfile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/token/:id" element={<ChosenToken />} />
         <Route path="*" element={<Main />} />
       </Routes>
