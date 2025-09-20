@@ -1,31 +1,53 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import Searchbar from "../Searchbar";
-import Loginbtn from "../Loginbtn";
-import Registerbtn from "../Registerbtn";
-import Banner from "../Banner";
 import "./Navbar.css";
 import "../Logoutbtn.css";
 import "../MyProfileButton.css";
 
 function Navbar() {
+  const { user, logout } = useUser();
+
   return (
     <header className="Navbar">
-      <Banner />
-
       <nav className="navbar-elements">
         {/* Logo */}
-        <span className="logo">BullRunners</span>
+        {user ? (
+          <Link to="/" className="logo">
+            <img src="../images/logo.png" alt="BullRunners logo" />
+          </Link>
+        ) : (
+          <Link to="/" className="logo">
+            BullRunners
+          </Link>
+        )}
 
-        {/* Search bar */}
+        {/* Középen search bar */}
         <div className="grow">
           <Searchbar />
         </div>
 
-        {/* Buttons */}
-        <div className="navbar-buttons">
-          <Registerbtn />
-          <Loginbtn />
-        </div>
+        {/* Jobb oldal */}
+        {user ? (
+          <div className="navbar-buttons">
+            <button onClick={logout} className="logoutButton">
+              Logout
+            </button>
+            <Link to="/profile" className="myProfileButton">
+              My profile
+            </Link>
+          </div>
+        ) : (
+          <div className="navbar-buttons">
+            <Link to="/register" className="registerButton">
+              Register
+            </Link>
+            <Link to="/login" className="loginButton">
+              Login
+            </Link>
+          </div>
+        )}
       </nav>
     </header>
   );
