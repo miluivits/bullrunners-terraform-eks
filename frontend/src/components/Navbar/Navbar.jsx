@@ -5,7 +5,7 @@ import Searchbar from "../Searchbar";
 import "./Navbar.css";
 import "../Logoutbtn.css";
 import "../MyProfileButton.css";
-import logo from "../../images/logo.png";
+import logo from "../../images/onlyBULL.png";
 
 function Navbar() {
   const { user, logout } = useUser();
@@ -13,17 +13,10 @@ function Navbar() {
   return (
     <header className="Navbar">
       <nav className="navbar-elements">
-        {/* Logo always on the left */}
         <Link to="/" className="logo">
           <img src={logo} alt="BullRunners logo" />
         </Link>
 
-        {/* Search bar in the center */}
-        <div className="grow">
-          <Searchbar />
-        </div>
-
-        {/* Right side buttons */}
         <div className="navbar-buttons">
           {user ? (
             <>

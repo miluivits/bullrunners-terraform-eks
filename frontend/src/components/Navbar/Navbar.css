@@ -39,6 +39,7 @@
   width: 120px;
   height: auto;
   margin-right: 10px;
+  margin-left: -50px
 }
 
 /* Searchbar container grows to fill space */
