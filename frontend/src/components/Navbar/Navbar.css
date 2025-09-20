@@ -1,0 +1,90 @@
+/* Navbar container */
+.Navbar {
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  padding: 10px 0;
+}
+
+/* Navbar inner elements layout */
+.navbar-elements {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+/* Logo styles */
+.Navbar .logo {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.Navbar .logo img {
+  width: 120px;
+  height: auto;
+  margin-right: 10px;
+}
+
+/* Searchbar container grows to fill space */
+.navbar-elements .grow {
+  flex-grow: 1;
+  max-width: 400px;
+  margin: 0 20px;
+}
+
+/* Navbar buttons container */
+.navbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar-buttons button,
+.navbar-buttons a {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4cbb71;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.navbar-buttons button:hover,
+.navbar-buttons a:hover {
+  background-color: #3aa35a;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .navbar-elements {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar-elements .grow {
+    max-width: 100%;
+  }
+
+  .navbar-buttons {
+    justify-content: center;
+  }
+}
