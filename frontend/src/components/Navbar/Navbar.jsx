@@ -20,19 +20,19 @@ function Navbar() {
         <div className="navbar-buttons">
           {user ? (
             <>
-              <button onClick={logout} className="logoutButton">
+              <button onClick={logout} className="btn">
                 Logout
               </button>
-              <Link to="/profile" className="myProfileButton">
+              <Link to="/profile" className="btn">
                 My profile
               </Link>
             </>
           ) : (
             <>
-              <Link to="/register" className="registerButton">
+              <Link to="/register" className="btn">
                 Register
               </Link>
-              <Link to="/login" className="loginButton">
+              <Link to="/login" className="lgnbtn">
                 Login
               </Link>
             </>
