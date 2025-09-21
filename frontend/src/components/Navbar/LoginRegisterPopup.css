@@ -3,7 +3,7 @@
   --burger-line-height: 0.125em;
   --burger-offset: 0.625em;
   --burger-bg: #00bf63;
-  --burger-color: #333;
+  --burger-color: #f3efef;
   --burger-line-border-radius: 0.1875em;
   --burger-diameter: 3.125em;
   --burger-btn-border-radius: calc(var(--burger-diameter) / 2);
@@ -20,9 +20,9 @@
   --nav-border-radius: 0.375em;
   --nav-border-color: #ccc;
   --nav-border-width: 0.0625em;
-  --nav-shadow-color: rgba(0, 0, 0, 0.2);
+  --nav-shadow-color: rgba(255, 255, 255, 0.2);
   --nav-shadow-width: 0 1px 5px;
-  --nav-bg: #eee;
+  --nav-bg: #313131;
   --nav-font-family: "Poppins", sans-serif;
   --nav-default-scale: 0.8;
   --nav-active-scale: 1;
@@ -32,7 +32,7 @@
   /* from properties to "unset" and the other to 0 */
   /* title */
   --nav-title-size: 0.625em;
-  --nav-title-color: #777;
+  --nav-title-color: #ffffff;
   --nav-title-padding-x: 1rem;
   --nav-title-padding-y: 0.25em;
   /* nav button */
@@ -137,7 +137,7 @@
 
 .popup-window ul li:nth-child(4) svg,
 .popup-window ul li:nth-child(5) svg {
-  color: rgb(153, 153, 153);
+  color: rgb(255, 255, 255);
 }
 
 .popup-window ul li:nth-child(7) svg {

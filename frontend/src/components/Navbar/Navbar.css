@@ -1,158 +1,133 @@
-/* Navbar container */
-.Navbar {
-  background-color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
+.navbar-container {
   width: 100%;
+  background: #0d0d0d;
+  color: white;
+  position: sticky;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+  margin-bottom: -80px;
 }
 
-/* Navbar inner elements layout */
-.navbar-elements {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* logo bal, hamburger/jobbra */
-  width: 90%;
+.navbar {
   max-width: 1200px;
-  box-sizing: border-box;
-  position: relative;
-}
-
-/* Logo styles */
-.Navbar .logo {
+  margin: auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin-left: -15rem;
+}
+
+.nav-links li a {
+  color: white;
   text-decoration: none;
-  cursor: pointer;
-  margin-left: -50px;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.Navbar .logo img {
-  width: 100px;
-  height: auto;
-  transition: transform 0.3s ease;
+.nav-links li a:hover {
+  color: #55ff00a4;
 }
 
-.Navbar .logo img:hover {
-  transform: scale(1.08);
-}
-
-/* Navbar buttons container */
-.navbar-buttons {
+.nav-right {
   display: flex;
   align-items: center;
-  gap: 10px;
-  transition: max-height 0.5s ease;
-  z-index: 1050;
+  gap: 0.8rem;
 }
 
-/* Unified button design */
-.btn, .lgnbtn {
-  font-size: 17px;
-  background: transparent;
+.nav-right .search input {
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
   border: none;
-  padding: 1em 1.5em;
-  color: #ffedd3; /* új alap szín */
-  text-transform: uppercase;
-  position: relative;
+}
+
+.nav-right .btn {
+  background: transparent; /* nincs háttér */
+  border: none; /* nincs körvonal */
+  color: white; /* alapból fehér */
+  font-weight: 500;
   cursor: pointer;
-  text-decoration: none;
-  transition: 0.5s ease;
+  transition: color 0.2s ease;
+  padding: 0.4rem 1rem; /* opcionális, ha kell méret */
 }
 
-.btn::before, .btn::after,
-.lgnbtn::before, .lgnbtn::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  transition: all 0.4s ease;
-  z-index: -1;
+.nav-right .btn:hover {
+  color: #ffd000; /* hoverre sárga */
 }
 
-.btn::before, .lgnbtn::before {
-  height: 2px;
-  width: 0;
-  background-color: #ffc506; /* új hover vonal szín */
+
+.nav-right .btn.get-started {
+  background: #00ff0d88; /* áttetsző zöld alap */
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease; /* smooth hover */
 }
 
-.btn::after, .lgnbtn::after {
-  height: 0;
-  width: 100%;
-  background-color: #ffc506; /* új hover háttér szín */
+.nav-right .btn.get-started:hover {
+  background: #00ff0d; /* élénk zöld */
+  color: #272727;       /* sötét szöveg */
+  transform: scale(1.05); /* kis nagyítás */
 }
 
-.btn:hover::before, .lgnbtn:hover::before {
-  width: 100%;
+
+.get-started {
+  background: #00ff0d88;
+  color: white;
+  border: none;
 }
 
-.btn:hover::after, .lgnbtn:hover::after {
-  height: 100%;
+.get-started:hover {
+  background: #00ff0d;
+  color: #272727;
+  size: 110%;
 }
 
-.btn:hover, .lgnbtn:hover {
-  color: #1e1e2b; /* hover szín */
-}
-
-/* Hamburger menu */
 .hamburger {
   display: none;
   flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 25px;
   cursor: pointer;
-  z-index: 1100;
+  gap: 4px;
 }
 
 .hamburger span {
-  display: block;
+  width: 25px;
   height: 3px;
   background: white;
-  border-radius: 3px;
-  transition: all 0.3s ease;
+  border-radius: 2px;
 }
 
-.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-.hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .navbar-elements {
-    flex-direction: row; /* logo bal, hamburger jobb */
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .navbar-buttons {
+@media screen and (max-width: 900px) {
+  .nav-links {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #333;
+    top: 60px;
+    left: -100%;
     flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    max-height: 0;
-    width: 100%;
-  }
-
-  .navbar-buttons.active {
-    max-height: 500px;
-    transition: max-height 0.5s ease;
-  }
-
-  .btn, .lgnbtn {
+    background: #111;
     width: 100%;
     text-align: center;
-    padding: 15px 0;
+    transition: 0.3s;
+    padding: 1rem 0;
+  }
+  .nav-links.active {
+    left: 0;
+  }
+
+  .nav-right {
+    display: none;
   }
 
   .hamburger {

@@ -1,12 +1,28 @@
-// src/components/LoginRegisterPopup.jsx
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./LoginRegisterPopup.css";
 
 export default function LoginRegisterPopup() {
+  const popupRef = useRef(null);
+  const checkboxRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(e.target) &&
+        checkboxRef.current
+      ) {
+        checkboxRef.current.checked = false; // ha kívül kattintasz -> bezár
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <label className="popup">
-      <input type="checkbox" />
+    <label className="popup" ref={popupRef}>
+      <input type="checkbox" ref={checkboxRef} />
       <div tabIndex="0" className="burger">
         <svg
           viewBox="0 0 24 24"

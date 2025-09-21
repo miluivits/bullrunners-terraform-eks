@@ -1,23 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import LoginRegisterPopup from "./LoginRegisterPopup";
-import Banner from "../Banner"; // <-- Banner import
-import "./Navbar.css";
+import Searchbar from "../Searchbar"; // <-- import Searchbar
+import Banner from "../Banner";
 import logo from "../../images/onlyBULL.png";
+import "./Navbar.css";
 
-function Navbar() {
+export default function Navbar() {
   const { user, logout } = useUser();
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef(null);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const handleLinkClick = () => setIsOpen(false);
-
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (navRef.current && !navRef.current.contains(event.target)) {
-        setIsOpen(false);
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -25,51 +22,45 @@ function Navbar() {
   }, []);
 
   return (
-    <header className="Navbar" ref={navRef}>
-      <nav className="navbar-elements">
-        {/* Logo bal oldalt */}
-        <Link to="/" className="logo" onClick={handleLinkClick}>
-          <img src={logo} alt="BullRunners logo" />
+    <header className="navbar-container" ref={navRef}>
+      <div className="navbar">
+        {/* Bal oldali logó */}
+        <Link to="/" className="logo">
+          <img src={logo} alt="Logo" />
         </Link>
 
-        {/* Banner középen */}
-        <div className="navbar-banner">
-          <Banner />
-        </div>
+        {/* Középső navigáció */}
+        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+          <li><Link to="/portfolio">Portfolio Tracker</Link></li>
+          <li><Link to="/cryptocurrencies">Cryptocurrencies</Link></li>
+        </ul>
 
-        {/* Jobb oldali gombok */}
-        <div className={`navbar-buttons ${isOpen ? "active" : ""}`}>
+        {/* Jobb oldali elemek */}
+        <div className="nav-right">
+          <Searchbar /> {/* <-- Searchbar komponens használata */}
           {user ? (
             <>
-              <button
-                onClick={() => {
-                  logout();
-                  handleLinkClick();
-                }}
-                className="btn"
-              >
-                Logout
-              </button>
-              <Link to="/profile" className="btn" onClick={handleLinkClick}>
-                My profile
-              </Link>
+              <Link to="/profile" className="btn">Profile</Link>
+              <button className="btn" onClick={logout}>Logout</button>
             </>
           ) : (
             <>
-              <LoginRegisterPopup />
+              <Link to="/login" className="btn login">Login</Link> {/* <-- Login gomb */}
+              <Link to="/register" className="btn get-started">Get Started</Link> {/* <-- Get Started link */}
             </>
           )}
         </div>
 
-        {/* Hamburger ikon */}
-        <div className={`hamburger ${isOpen ? "active" : ""}`} onClick={toggleMenu}>
+        {/* Hamburger ikon mobilra */}
+        <div
+          className={`hamburger ${menuOpen ? "active" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
           <span></span>
           <span></span>
           <span></span>
         </div>
-      </nav>
+      </div>
     </header>
   );
 }
-
-export default Navbar;
