@@ -35,11 +35,17 @@
   cursor: pointer;
 }
 
+/* Logo hover effekt */
 .Navbar .logo img {
   width: 120px;
   height: auto;
   margin-right: 10px;
-  margin-left: -50px
+  margin-left: -50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Navbar .logo img:hover {
+  transform: scale(1.08); /* kicsit nagyobb lesz */
 }
 
 /* Searchbar container grows to fill space */
@@ -53,28 +59,117 @@
 .navbar-buttons {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+  margin-right: -30px;
 }
 
-.navbar-buttons button,
-.navbar-buttons a {
-  padding: 8px 16px;
+/* Globális button stílus minden gombra/linkre */
+.btn {
+  font-size: 15px;
+  background: transparent;
   border: none;
-  border-radius: 5px;
-  background-color: #4cbb71;
-  color: white;
-  font-weight: 600;
+  padding: 1em 1.5em;
+  color: #4cbb71; /* Bullrunners zöld */
+  text-transform: uppercase;
+  position: relative;
+  transition: 0.5s ease;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s ease;
 }
 
-.navbar-buttons button:hover,
-.navbar-buttons a:hover {
-  background-color: #3aa35a;
-  transform: translateY(-2px);
+/* Alsó vonal animáció */
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #4cbb71;
+  transition: 0.5s ease;
 }
 
+/* Hover effekt */
+.btn:hover {
+  color: #1e1e2b;
+  transition-delay: 0.5s;
+}
+
+.btn:hover::before {
+  width: 100%;
+}
+
+/* Háttér animáció */
+.btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  background-color: #4cbb71;
+  transition: 0.4s ease;
+  z-index: -1;
+}
+
+.btn:hover::after {
+  height: 100%;
+  transition-delay: 0.4s;
+}
+
+/* Login button design - sárga */
+.lgnbtn {
+  font-size: 15px;
+  background: transparent;
+  border: none;
+  padding: 1em 1.5em;
+  color: #ffea06; /* sárga alap */
+  text-transform: uppercase;
+  position: relative;
+  transition: 0.5s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.lgnbtn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #fbff06;
+  transition: 0.5s ease;
+}
+
+.lgnbtn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  background-color: #fbff06;
+  transition: 0.4s ease;
+  z-index: -1;
+}
+
+.lgnbtn:hover {
+  color: #1e1e2b;
+  transition-delay: 0.5s;
+}
+
+.lgnbtn:hover::before {
+  width: 100%;
+}
+
+.lgnbtn:hover::after {
+  height: 100%;
+  transition-delay: 0.4s;
+}
+
+
+/* Media queries */
 @media (max-width: 768px) {
   .navbar-elements {
     flex-direction: column;
