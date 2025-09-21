@@ -42,7 +42,7 @@
 }
 
 .nav-links li a:hover {
-  color: #55ff00a4;
+  color: #00ff0daf;
 }
 
 .nav-right {
@@ -84,23 +84,12 @@
 }
 
 .nav-right .btn.get-started:hover {
-  background: #00ff0d; /* élénk zöld */
-  color: #272727;       /* sötét szöveg */
-  transform: scale(1.05); /* kis nagyítás */
+  background: #00ff0d9a; /* élénk zöld */
+  color: #ffffff;       /* sötét szöveg */
 }
 
 
-.get-started {
-  background: #00ff0d88;
-  color: white;
-  border: none;
-}
 
-.get-started:hover {
-  background: #00ff0d;
-  color: #272727;
-  size: 110%;
-}
 
 .hamburger {
   display: none;
