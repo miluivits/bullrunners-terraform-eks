@@ -1,11 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Searchbar.css";
 
 export default function Searchbar({ setSelectedToken }) {
   const [query, setQuery] = useState("");
   const [tokens, setTokens] = useState([]);
-  const [isSuggestionsVisible, setSuggestionsVisible] = useState(true);
+  const [isSuggestionsVisible, setSuggestionsVisible] = useState(false);
+  const containerRef = useRef(null);
 
   const fetchTokens = useCallback(async () => {
     try {
@@ -34,14 +35,26 @@ export default function Searchbar({ setSelectedToken }) {
 
   function handleInputChange(e) {
     setQuery(e.target.value);
+    setSuggestionsVisible(true);
   }
 
   function handleInputFocus() {
     setSuggestionsVisible(true);
   }
 
+  // Eltüntetés kattintásra bárhol
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setSuggestionsVisible(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className="search-container">
+    <div className="search-container" ref={containerRef}>
       <div className="search-bar">
         <input
           type="text"
@@ -66,11 +79,11 @@ export default function Searchbar({ setSelectedToken }) {
         </div>
       </div>
 
-      {query && filteredTokens.length > 0 && isSuggestionsVisible ? (
+      {query && filteredTokens.length > 0 && isSuggestionsVisible && (
         <div className="suggestions-container">
           {filteredTokens.map((token) => (
             <Link
-              to={`/tokendetails/${token.id}`} // token details route
+              to={`/tokendetails/${token.id}`}
               key={token.id}
               className="suggestion-item"
               onClick={() => {
@@ -84,7 +97,7 @@ export default function Searchbar({ setSelectedToken }) {
             </Link>
           ))}
         </div>
-      ) : null}
+      )}
 
       <div className="glow"></div>
     </div>

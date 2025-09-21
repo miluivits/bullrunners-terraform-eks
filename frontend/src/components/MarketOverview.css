@@ -1,0 +1,59 @@
+.market-overview-container {
+  color: white;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.market-overview-container h2 {
+  margin-bottom: 0.5rem;
+}
+
+.market-overview-container p {
+  margin-bottom: 1rem;
+  color: #aaa;
+}
+
+.market-cards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.market-card {
+  background-color: #1b1b1b;
+  padding: 1rem;
+  border-radius: 8px;
+  flex: 1 1 120px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.market-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 255, 0, 0.018);
+}
+
+.token-logo {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 0.5rem;
+}
+
+.token-name {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.token-price {
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.token-change.up {
+  color: #00ff00;
+}
+
+.token-change.down {
+  color: #ff4d4d;
+}
