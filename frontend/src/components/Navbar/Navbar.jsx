@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import LoginRegisterPopup from "./LoginRegisterPopup"; // <-- ide importáljuk
+import LoginRegisterPopup from "./LoginRegisterPopup";
+import Banner from "../Banner"; // <-- Banner import
 import "./Navbar.css";
 import logo from "../../images/onlyBULL.png";
 
@@ -26,14 +27,27 @@ function Navbar() {
   return (
     <header className="Navbar" ref={navRef}>
       <nav className="navbar-elements">
+        {/* Logo bal oldalt */}
         <Link to="/" className="logo" onClick={handleLinkClick}>
           <img src={logo} alt="BullRunners logo" />
         </Link>
 
+        {/* Banner középen */}
+        <div className="navbar-banner">
+          <Banner />
+        </div>
+
+        {/* Jobb oldali gombok */}
         <div className={`navbar-buttons ${isOpen ? "active" : ""}`}>
           {user ? (
             <>
-              <button onClick={() => { logout(); handleLinkClick(); }} className="btn">
+              <button
+                onClick={() => {
+                  logout();
+                  handleLinkClick();
+                }}
+                className="btn"
+              >
                 Logout
               </button>
               <Link to="/profile" className="btn" onClick={handleLinkClick}>
@@ -42,12 +56,12 @@ function Navbar() {
             </>
           ) : (
             <>
-              {/* Ide integráljuk a meglévő LoginRegisterPopup-ot */}
               <LoginRegisterPopup />
             </>
           )}
         </div>
 
+        {/* Hamburger ikon */}
         <div className={`hamburger ${isOpen ? "active" : ""}`} onClick={toggleMenu}>
           <span></span>
           <span></span>
