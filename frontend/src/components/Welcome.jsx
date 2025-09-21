@@ -5,7 +5,6 @@ export default function Welcome() {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    // Trigger fade-in animation on mount
     setAnimate(true);
   }, []);
 
@@ -17,6 +16,9 @@ export default function Welcome() {
       <p className="header-subtitle">
         Start effectively managing your entire portfolio with our portfolio tracker!
       </p>
+
+      {/* Smooth scroll nyíl */}
+      <div className="scroll-down">↓</div>
     </div>
   );
 }

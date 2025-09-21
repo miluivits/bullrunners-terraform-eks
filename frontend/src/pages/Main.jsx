@@ -6,12 +6,10 @@ import "./Main.css";
 export default function Main() {
   return (
     <div className="main-page">
-      {/* First section: Welcome */}
       <section className="section welcome-section">
         <Welcome />
       </section>
 
-      {/* Second section: placeholder */}
       <section className="section second-section">
         <div className="content-container">
           <h2>Market Overview</h2>
