@@ -1,0 +1,20 @@
+@keyframes pulse-bg {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.main-page {
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #000000,
+    #0a0a0a,
+    #001a0062,
+    #0a0a0a,
+    #000000
+  );
+  background-size: 200% 200%;
+  animation: pulse-bg 50s ease infinite;
+  color: white;
+}
