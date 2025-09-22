@@ -1,0 +1,138 @@
+.p-6 {
+    padding: 1.5rem;
+}
+
+.rounded-2xl {
+    border-radius: 1rem;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Header Styles */
+.text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+/* Table Styles */
+.overflow-x-auto {
+    overflow-x:visible;
+    position: relative;
+    top: -140px;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.border-collapse {
+    border-collapse: collapse;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Table Header Styles */
+.bg-blue-600 {
+    background-color: #1abc86;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+.px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.transition {
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Table Styling */
+.market-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e0e0e0; /* Adds border around the whole table */
+    table-layout: fixed;
+}
+
+.market-table th, 
+.market-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #e0e0e0; /* Adds left and right borders to all columns */
+    white-space: nowrap;
+}
+
+/* Table Header */
+.market-table thead tr {
+    background-color: #1abc9c;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Table Body */
+.market-table tbody tr {
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effects */
+.market-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Price Styling */
+.font-semibold {
+    font-weight: 600;
+    color: #27ae60;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .py-3 {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .py-4 {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .text-2xl {
+        font-size: 1.25rem;
+    }
+}

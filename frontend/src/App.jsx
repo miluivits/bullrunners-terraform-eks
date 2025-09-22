@@ -6,7 +6,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import { UserProvider } from "./context/UserContext"; // <-- fontos
-import TokenDetails from "./pages/TokenDetails";
+import TokenDetails from "./pages/TokenInfo/TokenDetails/TokenDetails";
+
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/tokendetails/:id" element={<TokenDetails />} />
+          <Route path="/tokendetails/:tokenId" element={<TokenDetails />} />
           <Route path="*" element={<Main />} />
         </Routes>
         <Footer />
