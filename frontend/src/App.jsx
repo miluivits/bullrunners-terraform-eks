@@ -5,8 +5,8 @@ import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-import ChosenToken from "./pages/ChosenToken";
 import { UserProvider } from "./context/UserContext"; // <-- fontos
+import TokenDetails from "./pages/TokenDetails";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/token/:id" element={<ChosenToken />} />
+          <Route path="/tokendetails/:id" element={<TokenDetails />} />
           <Route path="*" element={<Main />} />
         </Routes>
         <Footer />

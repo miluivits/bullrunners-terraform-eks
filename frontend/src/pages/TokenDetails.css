@@ -1,0 +1,81 @@
+.token-details-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  border-radius: 20px;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0,255,100,0.3);
+  font-family: 'Inter', sans-serif;
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #00ff88;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.token-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.token-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #00ff88;
+}
+
+.token-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.stat {
+  background: #111;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,255,100,0.2);
+}
+
+.stat h3 {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #00ff88;
+}
+
+.stat p.positive {
+  color: #00ff88;
+}
+
+.stat p.negative {
+  color: #ff0066;
+}
+
+.token-description {
+  margin-top: 2rem;
+  line-height: 1.6;
+}
+
+.token-website {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  color: #0f0f0f;
+  background: #00ff88;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.token-website:hover {
+  background: #00cc66;
+}
