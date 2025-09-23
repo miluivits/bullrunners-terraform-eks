@@ -1,12 +1,12 @@
 /* Container */
 .chosen-token {
   display: flex;
-  gap: 20px;
+  gap: 50px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 2rem 1rem;
+  padding: 0rem;
   background: linear-gradient(
     180deg,
     #000000,

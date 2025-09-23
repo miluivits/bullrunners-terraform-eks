@@ -2,6 +2,7 @@ import { useState } from "react"
 import OverView from "../Sections/OverView"
 import Markets from "../Sections/Markets";
 import Community from "../Sections/Community";
+import "./RightDetails.css";
 
 export default function RightDetails({ detailedData }) {
 

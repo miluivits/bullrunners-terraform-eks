@@ -40,7 +40,7 @@ const Overview = ({ detailedData }) => {
         </p>
       </div>
       <div className="performance-table">
-        <h3>📊 Performance</h3>
+        <h3>Performance</h3>
         <div className="table-wrapper">
           <table>
             <thead>
