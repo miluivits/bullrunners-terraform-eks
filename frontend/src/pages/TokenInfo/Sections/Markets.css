@@ -1,0 +1,189 @@
+/* Container */
+.markets-container {
+    font-family: 'Inter', sans-serif;
+    max-width: 1200px;
+    background: #1e1e1e;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: scale(0.97);
+    animation: fadeInScale 0.5s ease forwards;
+    margin: 6rem auto;
+}
+
+/* Fade-in + scale animáció */
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* Title */
+.markets-title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #58bc82, #58bc82);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* Table wrapper → max height + vertical scroll */
+.markets-table-wrapper {
+    border-radius: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 500px;
+    min-width: 800px;
+    background: #1e1e1e;
+}
+
+/* Scrollbar design (elegáns) */
+.markets-table-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.markets-table-wrapper::-webkit-scrollbar-thumb {
+    background: #58bc82;
+    border-radius: 6px;
+}
+
+.markets-table-wrapper::-webkit-scrollbar-track {
+    background: #111;
+}
+
+/* Table */
+.markets-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.markets-table th {
+    text-transform: uppercase;
+    padding: 1rem;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: left;
+    background: #111;
+    color: #58bc82;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.markets-table tbody tr {
+    transition: background 0.25s ease;
+    cursor: pointer;
+    background: #0a0a0a;
+}
+
+.markets-table tbody tr:nth-child(even) {
+    background: #111;
+}
+
+.markets-table tbody tr:hover {
+    background: #1a1a1a;
+}
+
+.markets-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #222;
+    color: #f1f1f1;
+    font-size: 1rem;
+}
+
+/* Pair */
+.markets-table .pair {
+    font-weight: 600;
+    color: #58bc82;
+}
+
+/* Price */
+.price {
+    font-weight: 700;
+    gap: 2px;
+}
+
+.price.up {
+    color: #58bc82;
+}
+
+.price.down {
+    color: #ff6464;
+}
+
+/* Volume */
+.volume {
+    font-weight: 600;
+    color: #f1c40f;
+}
+
+/* Trust */
+.trust {
+    text-align: center;
+    font-size: 1rem;
+}
+
+/* Loader */
+.markets-loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #aaa;
+}
+
+.loader {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid #58bc82;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 6px;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobil optimalizáció */
+@media (max-width: 768px) {
+    .markets-container {
+        padding: 1rem;
+        margin: 1rem;
+        margin-top: 40px;
+    }
+
+    .markets-table-wrapper {
+        min-width: 400px;
+        max-width: 400px;
+        max-height: 500px;
+        min-height: 400px;
+        overflow-x: auto;
+        background: #1e1e1e;
+    }
+
+    .markets-title {
+        font-size: 1.5rem;
+    }
+
+    .markets-table {
+        font-size: 0.9rem;
+    }
+
+    .markets-table th,
+    .markets-table td {
+        padding: 0.7rem;
+    }
+
+    .price {
+        font-size: 0.9rem;
+    }
+}

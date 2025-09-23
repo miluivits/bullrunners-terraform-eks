@@ -1,0 +1,131 @@
+.navbar-container {
+  width: 100%;
+  background: #0d0d0d;
+  color: white;
+  position: sticky;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+  margin-bottom: -70px;
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.logo img {
+  height: 40px;
+  transition: transform 0.3s ease-in-out; /* átmenet a normál állapotra */
+}
+
+.logo img:hover {
+  transform: scale(1.1);
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin-left: -15rem;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links li a:hover {
+  color: #00ff0daf;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.nav-right .search input {
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  border: none;
+}
+
+.nav-right .btn {
+  background: transparent; /* nincs háttér */
+  border: none; /* nincs körvonal */
+  color: white; /* alapból fehér */
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0.4rem 1rem; /* opcionális, ha kell méret */
+}
+
+.nav-right .btn:hover {
+  color: #ffd000; /* hoverre sárga */
+}
+
+
+.nav-right .btn.get-started {
+  background: #00ff0d88; /* áttetsző zöld alap */
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease; /* smooth hover */
+}
+
+.nav-right .btn.get-started:hover {
+  background: #00ff0d9a; /* élénk zöld */
+  color: #ffffff;       /* sötét szöveg */
+}
+
+
+
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 900px) {
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: -100%;
+    flex-direction: column;
+    background: #111;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    padding: 1rem 0;
+  }
+  .nav-links.active {
+    left: 0;
+  }
+
+  .nav-right {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}

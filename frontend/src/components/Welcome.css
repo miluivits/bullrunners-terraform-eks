@@ -1,0 +1,98 @@
+.header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  width: 100%;
+  color: white;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1.5s ease, transform 1.5s ease; /* lassabb fade-in */
+}
+
+.header-container.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.header-title {
+  font-size: 3rem;
+  font-weight: bold;
+  max-width: 80%;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  transition-delay: 0.3s; /* kis késleltetés */
+}
+
+.header-container.animate .header-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.header-subtitle {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  max-width: 600px;
+  color: #ccc;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  transition-delay: 0.8s; /* lassabban jön be */
+}
+
+.header-container.animate .header-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-down {
+  margin-top: 50px;
+  font-size: 2.5rem;
+  color: #fff;
+  opacity: 0;
+  animation: float 3s ease-in-out infinite;
+  cursor: pointer;
+  transition: opacity 1.5s ease;
+  transition-delay: 1.6s; /* nyíl a legvégén jelenjen meg */
+}
+
+.header-container.animate .scroll-down {
+  opacity: 0.7;
+}
+
+.scroll-down:hover {
+  opacity: 1;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #4cbb71, #cdd01f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Smooth lebegő animáció */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 2rem;
+  }
+  .header-subtitle {
+    font-size: 1rem;
+  }
+}
