@@ -1,8 +1,8 @@
 import React from "react";
-import "./OverView.css"
+import TradingViewChart from "../TradingViewChart";
+import "./OverView.css";
 
 const Overview = ({ detailedData }) => {
-
   const market_data = detailedData?.market_data || {};
   const {
     price_change_percentage_1h = 0,
@@ -14,41 +14,64 @@ const Overview = ({ detailedData }) => {
   } = market_data;
 
   if (!detailedData) {
-    return <div>Loading data...</div>
+    return <div>Loading data...</div>;
   }
 
+  const tokenSymbol = detailedData?.symbol || detailedData?.id;
+
+  const formatChange = (val) => {
+    const fixed = val.toFixed(2);
+    return (
+      <span className={val >= 0 ? "positive" : "negative"}>
+        {fixed}%
+      </span>
+    );
+  };
+
   return (
-    <div>
-  
+    <div className="overview-container">
+      {/* About Section */}
       <div className="about-section">
         <h3>About {detailedData.name}</h3>
         <p>{detailedData?.description?.en || "No description available."}</p>
       </div>
 
+      {/* TradingView Chart Section */}
+      <div className="chart-card">
+        <h3>📈 {detailedData.name} Price Chart</h3>
+        <TradingViewChart tokenSymbol={tokenSymbol} />
+        <p className="chart-info">
+          This chart shows the daily price of {detailedData.name} in USD. You can monitor trends and performance over time.
+        </p>
+      </div>
+
+      {/* Performance Table */}
       <div className="performance-table">
-        <h3>Performance</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>1h</th>
-              <th>24h</th>
-              <th>7d</th>
-              <th>14d</th>
-              <th>30d</th>
-              <th>1y</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{price_change_percentage_1h.toFixed(2)}%</td>
-              <td>{price_change_percentage_24h.toFixed(2)}%</td>
-              <td>{price_change_percentage_7d.toFixed(2)}%</td>
-              <td>{price_change_percentage_14d.toFixed(2)}%</td>
-              <td>{price_change_percentage_30d.toFixed(2)}%</td>
-              <td>{price_change_percentage_1y.toFixed(2)}%</td>
-            </tr>
-          </tbody>
-        </table>
+        <h3>📊 Performance</h3>
+        <div className="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>1h</th>
+                <th>24h</th>
+                <th>7d</th>
+                <th>14d</th>
+                <th>30d</th>
+                <th>1y</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{formatChange(price_change_percentage_1h)}</td>
+                <td>{formatChange(price_change_percentage_24h)}</td>
+                <td>{formatChange(price_change_percentage_7d)}</td>
+                <td>{formatChange(price_change_percentage_14d)}</td>
+                <td>{formatChange(price_change_percentage_30d)}</td>
+                <td>{formatChange(price_change_percentage_1y)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
