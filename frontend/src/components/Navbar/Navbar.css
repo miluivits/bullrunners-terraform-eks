@@ -42,7 +42,7 @@
 }
 
 .nav-links li a:hover {
-  color: #00ff0daf;
+  color: #58bc82;;
 }
 
 .nav-right {
@@ -73,7 +73,7 @@
 
 
 .nav-right .btn.get-started {
-  background: #00ff0d88; /* áttetsző zöld alap */
+  background: #4cbb71;; /* áttetsző zöld alap */
   color: white;
   border: none;
   padding: 0.4rem 1rem;
@@ -84,7 +84,7 @@
 }
 
 .nav-right .btn.get-started:hover {
-  background: #00ff0d9a; /* élénk zöld */
+  background: #4cbb719d;;; /* élénk zöld */
   color: #ffffff;       /* sötét szöveg */
 }
 

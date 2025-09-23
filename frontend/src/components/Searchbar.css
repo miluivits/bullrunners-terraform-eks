@@ -108,7 +108,7 @@
 }
 
 .suggestion-item:hover {
-  background-color: #225500; /* zöld hover */
+  background-color: #58bc82;; /* zöld hover */
   color: #fff; /* text maradjon fehér, vagy ha akarod, akár sötét (#272727) */
   transform: translateX(3px);
 }
