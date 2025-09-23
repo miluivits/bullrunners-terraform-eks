@@ -1,37 +1,85 @@
 import React from "react";
+import { FaTwitter, FaRedditAlien, FaTelegramPlane, FaDiscord, FaGlobe } from "react-icons/fa";
 import "./Community.css";
 
 export default function Community({ detailedData }) {
-    if (!detailedData || !detailedData.community_data) {
-        return <div>Loading community data...</div>;
-    }
+  if (!detailedData) {
+    return <div className="community-loading">Loading community data...</div>;
+  }
 
-    const { community_data, links } = detailedData;
+  const community_data = detailedData.community_data || {};
+  const links = detailedData.links || {};
 
-    return (
-        <div className="community-container">
-            <h2 className="community-title">Community & Socials</h2>
-            <div className="community-links">
-                <a href={links.homepage[0]} target="_blank" rel="noopener noreferrer">🌐 Official Website</a>
-                {links.twitter_screen_name && (
-                    <a href={`https://twitter.com/${links.twitter_screen_name}`} target="_blank" rel="noopener noreferrer">🐦 Twitter</a>
-                )}
-                {links.reddit_url && (
-                    <a href={links.reddit_url} target="_blank" rel="noopener noreferrer">📢 Reddit</a>
-                )}
-                {links.telegram_channel_identifier && (
-                    <a href={`https://t.me/${links.telegram_channel_identifier}`} target="_blank" rel="noopener noreferrer">📩 Telegram</a>
-                )}
-                {links.discord_url && (
-                    <a href={links.discord_url} target="_blank" rel="noopener noreferrer">🎮 Discord</a>
-                )}
-            </div>
+  const homepage = links.homepage?.[0] || null;
+  const twitter = links.twitter_screen_name ? `https://twitter.com/${links.twitter_screen_name}` : null;
+  const reddit = links.subreddit_url || links.reddit_url || null;
+  const telegram = links.telegram_channel_identifier
+    ? `https://t.me/${links.telegram_channel_identifier}`
+    : (links.telegram_url || null);
+  const discord = links.discord_url || null;
 
-            <div className="community-stats">
-                <p>🐦 Twitter Followers: <span>{community_data.twitter_followers.toLocaleString()}</span></p>
-                <p>📢 Reddit Subscribers: <span>{community_data.reddit_subscribers > 0 ? community_data.reddit_subscribers.toLocaleString() : "Unknown"}</span></p>
-                <p>🗨️ Reddit Active Users (24h): <span>{community_data?.reddit_active_users ? community_data?.reddit_active_users.toLocaleString() : "Unknown"}</span></p>
-            </div>
+  const formatNumber = (n) =>
+    typeof n === "number" && !isNaN(n) ? n.toLocaleString() : "Unknown";
+
+  const hasAnyLink = homepage || twitter || reddit || telegram || discord;
+
+  return (
+    <div className="community-container" role="region" aria-label="Community and Social Links">
+      <h2 className="community-title">Community & Socials</h2>
+
+      <div className="community-links">
+        {homepage && (
+          <a href={homepage} target="_blank" rel="noopener noreferrer">
+            <FaGlobe /> Official Website
+          </a>
+        )}
+        {twitter && (
+          <a href={twitter} target="_blank" rel="noopener noreferrer">
+            <FaTwitter /> Twitter
+          </a>
+        )}
+        {reddit && (
+          <a href={reddit} target="_blank" rel="noopener noreferrer">
+            <FaRedditAlien /> Reddit
+          </a>
+        )}
+        {telegram && (
+          <a href={telegram} target="_blank" rel="noopener noreferrer">
+            <FaTelegramPlane /> Telegram
+          </a>
+        )}
+        {discord && (
+          <a href={discord} target="_blank" rel="noopener noreferrer">
+            <FaDiscord /> Discord
+          </a>
+        )}
+        {!hasAnyLink && <div className="no-links">No public links available</div>}
+      </div>
+
+      <div className="community-stats">
+        <div className="stat">
+          <div className="stat-label"><FaTwitter /> Twitter followers</div>
+          <div className="stat-value">{formatNumber(community_data.twitter_followers)}</div>
         </div>
-    );
+
+        <div className="stat">
+          <div className="stat-label"><FaRedditAlien /> Reddit subscribers</div>
+          <div className="stat-value">
+            {typeof community_data.reddit_subscribers === "number" && community_data.reddit_subscribers > 0
+              ? community_data.reddit_subscribers.toLocaleString()
+              : "Unknown"}
+          </div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-label"><FaRedditAlien /> Reddit active (24h)</div>
+          <div className="stat-value">
+            {typeof community_data.reddit_active_users === "number" && community_data.reddit_active_users > 0
+              ? community_data.reddit_active_users.toLocaleString()
+              : "Unknown"}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -43,7 +43,7 @@ export default function Markets({ detailedData }) {
                                     <td>{ticker.market.name.split(" ")[0]}</td>
                                     <td className="pair">{ticker.base}/{ticker.target}</td>
                                     <td className={`price ${priceUp ? "up" : "down"}`}>
-                                        {ticker.last ? `$${ticker.last.toLocaleString()}` : 'N/A'}
+                                        {ticker.last ? `$${ticker.last.toLocaleString(undefined, { maximumFractionDigits: 0 })}` : 'N/A'}
                                         {priceUp ? (
                                             <ArrowUpRight className="icon up-icon" />
                                         ) : (

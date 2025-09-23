@@ -32,7 +32,7 @@ const Overview = ({ detailedData }) => {
     <div className="overview-container">
       {/* About Section */}
 
-            {/* TradingView Chart Section */}
+      {/* TradingView Chart Section */}
       <div className="chart-card">
         <TradingViewChart tokenSymbol={tokenSymbol} />
         <p className="chart-info">
@@ -68,8 +68,11 @@ const Overview = ({ detailedData }) => {
       </div>
       <div className="about-section">
         <h3>About {detailedData.name}</h3>
-        <p>{detailedData?.description?.en || "No description available."}</p>
+        <div className="about-text">
+          {detailedData?.description?.en || "No description available."}
+        </div>
       </div>
+
 
     </div>
   );

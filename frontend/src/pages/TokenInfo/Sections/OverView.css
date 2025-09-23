@@ -1,9 +1,19 @@
 .overview-container {
   max-width: 1000px;
-  margin: 2rem auto;
+  margin: 1.2rem auto;
   padding: 1rem;
   font-family: 'Inter', sans-serif;
   color: #f1f1f1;
+  opacity: 0; /* kezdetben láthatatlan */
+  transform: translateY(20px); /* kicsit lejjebb */
+  animation: fadeUp 0.8s ease forwards; /* animáció indul */
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* About Section */
@@ -27,6 +37,31 @@
   line-height: 1.6;
   word-wrap: break-word;
 }
+
+.about-text {
+  font-size: 1rem;
+  color: #aaa;
+  line-height: 1.6;
+  word-wrap: break-word;
+
+  max-height: 200px;   /* maximum látható magasság */
+  overflow-y: auto;    /* függőleges scroll, ha túl hosszú */
+  padding-right: 0.5rem; /* hogy ne takarja el a scrollbar a szöveget */
+}
+
+.about-text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.about-text::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 6px;
+}
+
+.about-text::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
 
 
 /* Chart Card */
