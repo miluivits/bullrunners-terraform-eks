@@ -17,7 +17,6 @@ export default function Markets({ detailedData }) {
 
     return (
         <div className="markets-container">
-            <h2 className="markets-title">🌐 Market Listings</h2>
             <div className="markets-table-wrapper">
                 <table className="markets-table">
                     <thead>

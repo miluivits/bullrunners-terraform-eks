@@ -31,21 +31,14 @@ const Overview = ({ detailedData }) => {
   return (
     <div className="overview-container">
       {/* About Section */}
-      <div className="about-section">
-        <h3>About {detailedData.name}</h3>
-        <p>{detailedData?.description?.en || "No description available."}</p>
-      </div>
 
-      {/* TradingView Chart Section */}
+            {/* TradingView Chart Section */}
       <div className="chart-card">
-        <h3>📈 {detailedData.name} Price Chart</h3>
         <TradingViewChart tokenSymbol={tokenSymbol} />
         <p className="chart-info">
           This chart shows the daily price of {detailedData.name} in USD. You can monitor trends and performance over time.
         </p>
       </div>
-
-      {/* Performance Table */}
       <div className="performance-table">
         <h3>📊 Performance</h3>
         <div className="table-wrapper">
@@ -73,6 +66,11 @@ const Overview = ({ detailedData }) => {
           </table>
         </div>
       </div>
+      <div className="about-section">
+        <h3>About {detailedData.name}</h3>
+        <p>{detailedData?.description?.en || "No description available."}</p>
+      </div>
+
     </div>
   );
 };

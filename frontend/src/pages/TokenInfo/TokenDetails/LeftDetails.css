@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
   padding-top: 100px;
   font-family: "Arial", sans-serif;
   flex-direction: column;
@@ -15,7 +15,8 @@
   padding: 20px;
   border-radius: 12px;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  min-width: 300px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
   margin-top: 20px;
@@ -53,80 +54,109 @@
   margin: 5px 0;
 }
 
-.addToBtn button {
-  background: #58bc82;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+/* Add to Portfolio container */
+.addToBtn {
   width: 100%;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-top: 10px;
-  transition: 0.3s;
-}
-
-.addToBtn button:hover {
-  background: #c9a340;
-}
-
-.add-form {
-  margin-top: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 }
 
+/* Alap gomb stílus */
+/* Alap gomb stílus */
+.addToBtn button {
+  background: linear-gradient(90deg, #58bc82, #4fa873);
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease-in-out; /* finomabb átmenet */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25); /* enyhébb árnyék */
+}
+
+/* Hover effekt animáció */
+.addToBtn button:hover {
+  background: linear-gradient(90deg, #51b273, #469a65); /* finom gradient változás */
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* finom árnyék növekedés */
+}
+
+
+/* Form container */
+.add-form {
+  margin-top: 10px;
+  background: rgba(26, 26, 26, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+/* Form label */
 .add-form span {
   font-size: 1rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.add-form input {
-  width: 80%;
-  padding: 8px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
-  background: #fff;
-  color: #333;
+  font-weight: 600;
+  color: #58bc82;
   margin-bottom: 10px;
 }
 
-.add-form button {
-  width: 80%;
-  padding: 8px;
+/* Input mező */
+.add-form input {
+  width: 100%;
+  padding: 10px;
   font-size: 1rem;
-  font-weight: bold;
+  border: 1px solid #333;
+  border-radius: 10px;
+  text-align: center;
+  background: #0d0d0d;
+  color: #fff;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-form input:focus {
+  border: 1px solid #58bc82;
+  box-shadow: 0 0 8px #58bc82;
+}
+
+/* Form gombok */
+.add-form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 700;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.3s;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.add-form button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .add-form button:first-of-type {
   background: #58bc82;
-  color: white;
-}
-
-.add-form button:first-of-type:hover {
-  background: #4fa873;
+  color: #fff;
 }
 
 .add-form button:last-of-type {
   background: #ff6464;
-  color: white;
-}
-
-.add-form button:last-of-type:hover {
-  background: #e55555;
+  color: #fff;
 }
 
 .info {
