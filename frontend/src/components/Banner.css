@@ -1,0 +1,19 @@
+.banner {
+  width: 100%;
+  background: #111;
+  color: #f5f5f5;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border-bottom: 1px solid #222;
+}
+
+.banner-elements {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.banner-elements span {
+  white-space: nowrap;
+}
