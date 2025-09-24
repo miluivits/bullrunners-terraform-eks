@@ -6,17 +6,16 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Ellenőrzés minden oldalbetöltéskor
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch("/api/me", {
-          credentials: "include", // fontos! így küldi a HttpOnly cookie-t
+        const response = await fetch("http://localhost:5000/auth/me", {
+          credentials: "include", // cookie küldése
         });
 
         if (response.ok) {
           const data = await response.json();
-          setUser(data.user); // API válasza pl: { user: {id, email, name} }
+          setUser(data.user);
         } else {
           setUser(null);
         }
@@ -31,32 +30,49 @@ export function UserProvider({ children }) {
     fetchUser();
   }, []);
 
-  async function login(credentials) {
+  async function login({ username, password }) {
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user);
-      } else {
-        setUser(null);
-      }
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.error || "Login failed");
+
+      setUser(data.user);
     } catch (err) {
       console.error("Login error:", err);
-      setUser(null);
+      throw err;
+    }
+  }
+
+  async function register({ username, password }) {
+    try {
+      const response = await fetch("http://localhost:5000/auth/register", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.error || "Register failed");
+
+      setUser(data.user);
+    } catch (err) {
+      console.error("Register error:", err);
+      throw err;
     }
   }
 
   async function logout() {
     try {
-      await fetch("/api/logout", {
+      await fetch("http://localhost:5000/auth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -68,7 +84,7 @@ export function UserProvider({ children }) {
   }
 
   return (
-    <UserContext.Provider value={{ user, login, logout, loading }}>
+    <UserContext.Provider value={{ user, login, register, logout, loading }}>
       {children}
     </UserContext.Provider>
   );
