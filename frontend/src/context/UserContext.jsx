@@ -6,11 +6,14 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const BACKEND_URL = "http://localhost:3000"; 
+
+
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch("http://localhost:5000/auth/me", {
-          credentials: "include", // cookie küldése
+        const response = await fetch(`/api/me`, {
+          credentials: "include", 
         });
 
         if (response.ok) {
@@ -32,7 +35,7 @@ export function UserProvider({ children }) {
 
   async function login({ username, password }) {
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch(`/api/login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -52,7 +55,7 @@ export function UserProvider({ children }) {
 
   async function register({ username, password }) {
     try {
-      const response = await fetch("http://localhost:5000/auth/register", {
+      const response = await fetch(`/api/register`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -72,7 +75,7 @@ export function UserProvider({ children }) {
 
   async function logout() {
     try {
-      await fetch("http://localhost:5000/auth/logout", {
+      await fetch(`${BACKEND_URL}/api/logout`, {
         method: "POST",
         credentials: "include",
       });
