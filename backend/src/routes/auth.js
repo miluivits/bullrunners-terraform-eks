@@ -2,6 +2,7 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import User from "../model/User.js";
 import { signAuthToken } from "../services/auth.service.js";
+import { requireAuth } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -22,7 +23,9 @@ router.post("/register", async (req, res) => {
 
     const token = signAuthToken(user);
     res.cookie("br_session", token, { httpOnly: true });
-    res.status(201).json({ id: user._id, username: user.username });
+    res
+      .status(201)
+      .json({ user: { id: user._id.toString(), username: user.username } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -43,9 +46,9 @@ router.post("/login", async (req, res) => {
 
     const token = signAuthToken(user);
     res.cookie("br_session", token, { httpOnly: true });
-    res.json({ id: user._id, username: user.username });
-  } catch (e) {
-    console.error(e);
+    res.json({ user: { id: user._id.toString(), username: user.username } });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -53,6 +56,17 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (_req, res) => {
   res.clearCookie("br_session", { httpOnly: true });
   res.status(204).end();
+});
+
+router.get("/me", requireAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json({ user: { id: user._id.toString(), username: user.username } });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 export default router;
