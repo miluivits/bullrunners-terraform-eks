@@ -11,7 +11,7 @@ import TokenDetails from "./pages/TokenInfo/TokenDetails/TokenDetails";
 
 function App() {
   return (
-    <UserProvider>  {/* 👈 itt körbetekerjük az egész appot */}
+    <UserProvider> 
       <Router>
         <Navbar />
         <Routes>
