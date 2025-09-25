@@ -26,9 +26,24 @@ export default function RightDetails({ detailedData }) {
     return (
         <div className="right-section">
             <div className="tabs">
-                <button className="tabbtn" onClick={() => setActiveSection("overview")}>Overview</button>
-                <button className="tabbtn" onClick={() => setActiveSection("markets")}>Markets</button>
-                <button className="tabbtn" onClick={() => setActiveSection("community")}>Community</button>
+                <button 
+                    className={`tabbtn ${activeSection === "overview" ? "active" : ""}`} 
+                    onClick={() => setActiveSection("overview")}
+                >
+                    Overview
+                </button>
+                <button 
+                    className={`tabbtn ${activeSection === "markets" ? "active" : ""}`} 
+                    onClick={() => setActiveSection("markets")}
+                >
+                    Markets
+                </button>
+                <button 
+                    className={`tabbtn ${activeSection === "community" ? "active" : ""}`} 
+                    onClick={() => setActiveSection("community")}
+                >
+                    Community
+                </button>
             </div>
 
             <div className="section-content">
@@ -38,4 +53,3 @@ export default function RightDetails({ detailedData }) {
 
     );
 }
-

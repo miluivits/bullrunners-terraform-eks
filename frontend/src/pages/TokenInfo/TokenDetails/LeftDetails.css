@@ -64,9 +64,8 @@
 }
 
 /* Alap gomb stílus */
-/* Alap gomb stílus */
 .addToBtn button {
-  background: linear-gradient(90deg, #58bc82, #4fa873);
+  background: linear-gradient(90deg, #4cbb71, #469e5d);
   color: #fff;
   padding: 12px 20px;
   border: none;
@@ -75,17 +74,15 @@
   width: 100%;
   font-size: 1.1rem;
   font-weight: 700;
-  transition: all 0.25s ease-in-out; /* finomabb átmenet */
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25); /* enyhébb árnyék */
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* Hover effekt animáció */
 .addToBtn button:hover {
-  background: linear-gradient(90deg, #51b273, #469a65); /* finom gradient változás */
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* finom árnyék növekedés */
+  background: linear-gradient(90deg, #4cbb71, #3f8e56);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-
 
 /* Form container */
 .add-form {
@@ -106,7 +103,7 @@
 .add-form span {
   font-size: 1rem;
   font-weight: 600;
-  color: #58bc82;
+  color: #4cbb71;
   margin-bottom: 10px;
 }
 
@@ -126,8 +123,8 @@
 }
 
 .add-form input:focus {
-  border: 1px solid #58bc82;
-  box-shadow: 0 0 8px #58bc82;
+  border: 1px solid #4cbb71;
+  box-shadow: 0 0 8px #4cbb71;
 }
 
 /* Form gombok */
@@ -150,7 +147,7 @@
 }
 
 .add-form button:first-of-type {
-  background: #58bc82;
+  background: #4cbb71;
   color: #fff;
 }
 
@@ -165,7 +162,7 @@
 }
 
 .info h2 {
-  border-bottom: 2px solid #58bc82;
+  border-bottom: 2px solid #4cbb71;
   display: inline-block;
   padding-bottom: 5px;
 }
@@ -176,7 +173,7 @@
 }
 
 .info a {
-  color: #58bc82;
+  color: #4cbb71;
   text-decoration: none;
   font-weight: bold;
 }
