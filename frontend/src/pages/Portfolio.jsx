@@ -1,161 +1,198 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import "./Portfolio.css";
 
+const COLORS = [
+  "#4cbb71", // zöld
+  "#ff6b6b", // piros
+  "#feca57", // sárga
+  "#54a0ff", // kék
+  "#ff9ff3", // rózsaszín
+  "#00d2d3", // türkiz
+  "#5f27cd", // lila
+  "#01a3a4", // sötét türkiz
+  "#ff793f", // narancs
+  "#2f3542", // sötét szürke
+  "#1e90ff", // világoskék
+  "#f368e0", // pink
+];
+
+
+// 🔥 MarketCap formatter (M, B, T)
+function formatMarketCap(num) {
+    if (num >= 1_000_000_000_000) {
+        return `$${(num / 1_000_000_000_000).toFixed(2)}T`;
+    } else if (num >= 1_000_000_000) {
+        return `$${(num / 1_000_000_000).toFixed(2)}B`;
+    } else if (num >= 1_000_000) {
+        return `$${(num / 1_000_000).toFixed(2)}M`;
+    }
+    return `$${num.toLocaleString()}`;
+}
+
 export default function Portfolio() {
-  const { user, loading } = useUser();
-  const [tokens, setTokens] = useState([]);
-  const [loadingPortfolio, setLoadingPortfolio] = useState(true);
-  const [error, setError] = useState(null);
+    const { user, loading } = useUser();
+    const [tokens, setTokens] = useState([]);
+    const [totalValue, setTotalValue] = useState(0);
+    const [highestToken, setHighestToken] = useState(null);
 
-  useEffect(() => {
-    const fetchPortfolio = async () => {
-      if (!user) return;
-      try {
-        setLoadingPortfolio(true);
-        const res = await fetch(`/api/portfolio/${user.username}`);
-        if (!res.ok) throw new Error("Failed to fetch portfolio");
-        const data = await res.json(); // data: array of { name, amount }
-        // Ha nincs token, üres
-        if (data.length === 0) {
-          setTokens([]);
-          return;
-        }
+    useEffect(() => {
+        const fetchPortfolio = async () => {
+            try {
+                const res = await fetch(`/api/portfolio/${user.username}`);
+                const portfolioTokens = await res.json();
 
-        // Lekérdezzük az árakat CoinGecko-tól
-        // A token.name-okat át kell alakítani a CoinGecko API id-kre
-        // Tegyük fel, hogy token.name már megegyezik a CoinGecko id-val (pl. "bitcoin", "ethereum")
-        const ids = data.map((t) => t.name.toLowerCase()).join(",");
-        const priceRes = await fetch(
-          `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
+                if (!portfolioTokens.length) return;
+
+                const ids = portfolioTokens.map((t) => t.name.toLowerCase()).join(",");
+
+                const priceRes = await fetch(
+                    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}`
+                );
+                const priceData = await priceRes.json();
+
+                const enriched = portfolioTokens.map((t) => {
+                    const market = priceData.find((m) => m.id === t.name.toLowerCase());
+                    const usdValue = market ? t.amount * market.current_price : 0;
+                    return {
+                        ...t,
+                        price: market?.current_price || 0,
+                        usdValue,
+                        image: market?.image || "",
+                        change24h: market?.price_change_percentage_24h || 0,
+                        marketCap: market?.market_cap || 0,
+                    };
+                });
+
+                const total = enriched.reduce((acc, t) => acc + t.usdValue, 0);
+                const top = enriched.reduce((a, b) => (a.usdValue > b.usdValue ? a : b));
+
+                setTokens(enriched);
+                setTotalValue(total);
+                setHighestToken(top);
+            } catch (error) {
+                console.error("Error fetching portfolio:", error);
+            }
+        };
+
+        if (user) fetchPortfolio();
+    }, [user]);
+
+    if (loading) return <p className="loading-text">Loading...</p>;
+
+    if (!user) {
+        return (
+            <div className="marketing-page">
+                <h1>Welcome!</h1>
+                <p>Track your tokens, monitor your gains, and level up your crypto game!</p>
+                <Link to="/register" className="cta-button">
+                    Register Now
+                </Link>
+            </div>
         );
-        const priceJson = await priceRes.json();
+    }
 
-        // Készítsük el az új tokens tömböt, amely tartalmazza az USD értéket is
-        const enriched = data.map((t) => {
-          const lc = t.name.toLowerCase();
-          const priceObj = priceJson[lc];
-          const price = priceObj?.usd ?? 0;
-          const usdValue = price * t.amount;
-          return {
-            name: t.name,
-            amount: t.amount,
-            price,
-            usdValue,
-          };
-        });
-
-        setTokens(enriched);
-      } catch (err) {
-        console.error("Error fetching portfolio or prices:", err);
-        setError("Could not load portfolio data.");
-      } finally {
-        setLoadingPortfolio(false);
-      }
-    };
-
-    fetchPortfolio();
-  }, [user]);
-
-  if (loading) return <p className="loading-text">Loading...</p>;
-
-  if (!user) {
     return (
-      <div className="marketing-page">
-        <h1>Welcome!</h1>
-        <p>Track your tokens, monitor your gains, and level up your crypto game!</p>
-        <Link to="/register" className="cta-button">
-          Register Now
-        </Link>
-      </div>
-    );
-  }
+        <div className="portfolio-page">
+            <h1>{user.username}'s Portfolio</h1>
 
-  const COLORS = [
-    "#4cbb71",
-    "#00c49f",
-    "#0088fe",
-    "#ffbb28",
-    "#ff8042",
-    "#a020f0",
-    "#ff4d4d",
-    "#3aa15a",
-    "#cccc00",
-    "#1e90ff",
-  ];
+            {/* 🔥 SECTION 1: SUMMARY */}
+            <section className="portfolio-summary">
+                <h2>Overview</h2>
+                <div className="summary-grid">
+                    <div className="summary-card">
+                        <h3>Total Portfolio Value</h3>
+                        <p className="big-value">${totalValue.toLocaleString()}</p>
+                    </div>
+                    <div className="summary-card">
+                        <h3>Number of Tokens</h3>
+                        <p>{tokens.length}</p>
+                    </div>
+                    <div className="summary-card">
+                        <h3>Top Holding</h3>
+                        {highestToken ? (
+                            <p>
+                                {highestToken.name} (${highestToken.usdValue.toLocaleString()})
+                            </p>
+                        ) : (
+                            <p>-</p>
+                        )}
+                    </div>
+                    <div className="summary-card">
+                        <h3>Average 24h Change</h3>
+                        <p>
+                            {tokens.length
+                                ? (
+                                    tokens.reduce((acc, t) => acc + t.change24h, 0) / tokens.length
+                                ).toFixed(2)
+                                : 0}
+                            %
+                        </p>
+                    </div>
+                </div>
+            </section>
 
-  const totalUsd = tokens.reduce((sum, t) => sum + (t.usdValue || 0), 0);
+            {/* 🔥 SECTION 2: PIE CHART */}
+            {/* 🔥 SECTION 2: PIE CHART */}
+            <section className="portfolio-chart">
+                <h2>Portfolio Distribution</h2>
+                <PieChart width={700} height={400}>
+                    <Pie
+                        data={tokens}
+                        dataKey="usdValue"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={150}
+                        // custom label, hogy $-t is mutasson
+                        label={({ name, value }) =>
+                            `${name}: $${Math.round(value).toLocaleString()}`
+                        }
+                    >
+                        {tokens.map((_, index) => (
+                            <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Tooltip
+                        formatter={(value, name) => [`$${value.toLocaleString()}`, name]}
+                    />
+                    <Legend />
+                </PieChart>
+            </section>
 
-  return (
-    <div className="portfolio-page">
-      <h1>{user.username}'s Portfolio</h1>
 
-      {loadingPortfolio ? (
-        <p className="loading-text">Loading your portfolio...</p>
-      ) : error ? (
-        <p className="error-text">{error}</p>
-      ) : tokens.length === 0 ? (
-        <p className="empty-text">Your portfolio is empty. Start adding tokens!</p>
-      ) : (
-        <div className="chart-container">
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={tokens}
-                dataKey="usdValue"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={150}
-                label={(entry) =>
-                  `${entry.name}: ${((entry.usdValue / totalUsd) * 100).toFixed(1)}%`
-                }
-              >
-                {tokens.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={(value, name) => [
-                  `$${value.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}`,
-                  name,
-                ]}
-                contentStyle={{
-                  backgroundColor: "#e6e6e6ff",
-                  border: "1px solid #4cbb71",
-                  borderRadius: "8px",
-                  color: "#ffffff",
-                }}
-              />
-              <Legend
-                wrapperStyle={{
-                  color: "#ffffff",
-                  fontSize: "0.9rem",
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-
-          <div className="portfolio-summary">
-            <p>Total Portfolio Value: <strong>${totalUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></p>
-          </div>
+            {/* 🔥 SECTION 3: TOKEN LIST */}
+            <section className="portfolio-list">
+                <h2>Your Tokens</h2>
+                <div className="token-table">
+                    <div className="token-row header">
+                        <span>Logo</span>
+                        <span>Name</span>
+                        <span>Amount</span>
+                        <span>Price (USD)</span>
+                        <span>Value (USD)</span>
+                        <span>24h Change</span>
+                        <span>Market Cap</span>
+                    </div>
+                    {tokens.map((t) => (
+                        <div className="token-row" key={t.name}>
+                            <span>
+                                <img src={t.image} alt={t.name} className="token-img" />
+                            </span>
+                            <span>{t.name}</span>
+                            <span>{t.amount}</span>
+                            <span>${t.price.toLocaleString()}</span>
+                            <span>${t.usdValue.toLocaleString()}</span>
+                            <span className={t.change24h >= 0 ? "green" : "red"}>
+                                {t.change24h.toFixed(2)}%
+                            </span>
+                            <span>{formatMarketCap(t.marketCap)}</span>
+                        </div>
+                    ))}
+                </div>
+            </section>
         </div>
-      )}
-    </div>
-  );
+    );
 }
