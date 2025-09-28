@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import { UserProvider } from "./context/UserContext"; // <-- fontos
 import TokenDetails from "./pages/TokenInfo/TokenDetails/TokenDetails";
 import Portfolio from "./pages/Portfolio";
+import Cryptocurrencies from "./pages/Cryptocurrencies";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
            <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/tokendetails/:tokenId" element={<TokenDetails />} />
+          <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
           <Route path="*" element={<Main />} />
         </Routes>
         <Footer />
