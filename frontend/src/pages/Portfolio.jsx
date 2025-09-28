@@ -5,22 +5,20 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import "./Portfolio.css";
 
 const COLORS = [
-  "#4cbb71", // zöld
-  "#ff6b6b", // piros
-  "#feca57", // sárga
-  "#54a0ff", // kék
-  "#ff9ff3", // rózsaszín
-  "#00d2d3", // türkiz
-  "#5f27cd", // lila
-  "#01a3a4", // sötét türkiz
-  "#ff793f", // narancs
-  "#2f3542", // sötét szürke
-  "#1e90ff", // világoskék
-  "#f368e0", // pink
+    "#4cbb71",
+    "#ff6b6b",
+    "#feca57",
+    "#54a0ff",
+    "#ff9ff3",
+    "#00d2d3",
+    "#5f27cd",
+    "#01a3a4",
+    "#ff793f",
+    "#2f3542",
+    "#1e90ff",
+    "#f368e0",
 ];
 
-
-// 🔥 MarketCap formatter (M, B, T)
 function formatMarketCap(num) {
     if (num >= 1_000_000_000_000) {
         return `$${(num / 1_000_000_000_000).toFixed(2)}T`;
@@ -96,9 +94,6 @@ export default function Portfolio() {
 
     return (
         <div className="portfolio-page">
-            <h1>{user.username}'s Portfolio</h1>
-
-            {/* 🔥 SECTION 1: SUMMARY */}
             <section className="portfolio-summary">
                 <h2>Overview</h2>
                 <div className="summary-grid">
@@ -122,20 +117,21 @@ export default function Portfolio() {
                     </div>
                     <div className="summary-card">
                         <h3>Average 24h Change</h3>
-                        <p>
-                            {tokens.length
-                                ? (
-                                    tokens.reduce((acc, t) => acc + t.change24h, 0) / tokens.length
-                                ).toFixed(2)
-                                : 0}
-                            %
-                        </p>
+                        {(() => {
+                            const avgChange = tokens.length
+                                ? tokens.reduce((acc, t) => acc + t.change24h, 0) / tokens.length
+                                : 0;
+                            return (
+                                <p className={avgChange >= 0 ? "green" : "red"}>
+                                    {avgChange.toFixed(2)}%
+                                </p>
+                            );
+                        })()}
                     </div>
+
                 </div>
             </section>
 
-            {/* 🔥 SECTION 2: PIE CHART */}
-            {/* 🔥 SECTION 2: PIE CHART */}
             <section className="portfolio-chart">
                 <h2>Portfolio Distribution</h2>
                 <PieChart width={700} height={400}>
@@ -146,7 +142,6 @@ export default function Portfolio() {
                         cx="50%"
                         cy="50%"
                         outerRadius={150}
-                        // custom label, hogy $-t is mutasson
                         label={({ name, value }) =>
                             `${name}: $${Math.round(value).toLocaleString()}`
                         }
@@ -162,8 +157,6 @@ export default function Portfolio() {
                 </PieChart>
             </section>
 
-
-            {/* 🔥 SECTION 3: TOKEN LIST */}
             <section className="portfolio-list">
                 <h2>Your Tokens</h2>
                 <div className="token-table">

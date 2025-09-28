@@ -214,4 +214,10 @@
   font-weight: bold;
 }
 
-    
+.summary-card .green {
+  color: #00ff88;
+}
+
+.summary-card .red {
+  color: #ff4d4d;
+}
