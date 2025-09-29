@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { TokenSubdocSchema } from "./Token.js";
 
 const { Schema, model } = mongoose;
 
@@ -8,12 +9,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  tokens: [
-    {
-      name: String,
-      amount: { type: Number, default: 0 },
-    },
-  ],
+  tokens: { type: [TokenSubdocSchema], default: [] },
   createdAt: { type: Date, default: Date.now },
 });
 
