@@ -1,59 +1,117 @@
 .market-overview-container {
   color: white;
-  padding: 2rem;
-  border-radius: 10px;
+  padding: 2.5rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+    text-align: center; /* <-- ide */
+}
+
+.market-overview-container:hover {
+  transform: translateY(-3px);
 }
 
 .market-overview-container h2 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.8rem;
+  color: #4cbb71;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+    text-align: center; /* <-- ide */
 }
 
 .market-overview-container p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: #aaa;
+  font-size: 1rem;
+
 }
 
 .market-cards {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .market-card {
   background-color: #1b1b1b;
-  padding: 1rem;
-  border-radius: 8px;
-  flex: 1 1 120px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  flex: 1 1 140px;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-width: 200px;
+}
+
+.market-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, #4cbb71, #00ff00, #3da862, #4cbb71);
+  background-size: 400% 400%;
+  opacity: 0.1;
+  transform: rotate(25deg);
+  transition: all 0.4s ease;
+}
+
+.market-card:hover::before {
+  animation: pulse-gradient 3s ease infinite;
+  opacity: 0.15;
 }
 
 .market-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 255, 0, 0.018);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(0, 255, 0, 0.043);
+  background-color: #222222;
 }
 
 .token-logo {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 0.5rem;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.market-card:hover .token-logo {
+  transform: scale(1.1);
 }
 
 .token-name {
-  font-weight: 600;
-  margin-bottom: 0.2rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
+  color: #ffffff;
 }
 
 .token-price {
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  color: #cccccc;
+  font-weight: 500;
 }
 
 .token-change.up {
   color: #00ff00;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 255, 0, 0.5);
 }
 
 .token-change.down {
   color: #ff4d4d;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(255, 77, 77, 0.5);
+}
+
+@keyframes pulse-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

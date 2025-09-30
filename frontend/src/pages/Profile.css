@@ -1,0 +1,120 @@
+  /* Profile oldal alap */
+  .profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #0d0d0d;
+    font-family: "Inter", sans-serif;
+    color: #e6e6e6;
+
+    min-height: 100vh;
+    background: linear-gradient(180deg,
+        #000000,
+        #0a0a0a,
+        #001a0062,
+        #0a0a0a,
+        #000000);
+    background-size: 200% 200%;
+    animation: pulse-bg 50s ease infinite;
+    color: white;
+
+  }
+
+  /* Betöltés szöveg */
+  .loading-text {
+    color: #888;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  /* Profil kártya stílus, ha szükséges a ProfileCardhoz */
+  .profile-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Modal háttér */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  /* Modal ablak */
+  .modal {
+    background: #0d0d0d;
+    border: 2px solid #4cbb71;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    color: #e6e6e6;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  }
+
+  .modal h2 {
+    color: #4cbb71;
+    margin-bottom: 1rem;
+  }
+
+  .modal p {
+    margin-bottom: 2rem;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+  }
+
+  .modal-buttons:hover {
+    transform: translateY(-2px);
+    transform: none !important;
+    /* ne tolódjon el */
+    box-shadow: none !important;
+    /* ne legyen árnyék */
+  }
+
+
+  /* Gombok */
+  .profile-btn {
+    background: linear-gradient(145deg, #4cbb71, #3da862);
+    color: #0d0d0d;
+    padding: 0.9rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .profile-btn:hover {
+    transform: translateY(-2px);
+  }
+
+
+  /* Veszély gomb a törléshez */
+  .profile-btn.danger {
+    background: transparent;
+    color: #ff4c4c;
+    border: 2px solid #ff4c4c;
+    box-shadow: none;
+  }
+
+  .profile-btn.danger:hover {
+    background: #ff4c4c;
+    color: #0d0d0d;
+    box-shadow: 0 8px 20px rgba(255, 76, 76, 0.4);
+    transform: translateY(-2px);
+  }

@@ -12,7 +12,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch(`/api/me`, {
+        const response = await fetch(`/api/user`, {
           credentials: "include", 
         });
 
@@ -75,7 +75,7 @@ export function UserProvider({ children }) {
 
   async function logout() {
     try {
-      await fetch(`${BACKEND_URL}/api/logout`, {
+      await fetch(`/api/logout`, {
         method: "POST",
         credentials: "include",
       });

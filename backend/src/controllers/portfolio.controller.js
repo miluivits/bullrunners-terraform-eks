@@ -65,7 +65,7 @@ export async function UserPortfolio(req, res) {
       const costs = avg * amount;
       const currentPrice = prices[name] ?? null;
       const currentValue = currentPrice !== null ? currentPrice * amount : null;
-      const profit = currentValue !== null ? currentValue - invested : null;
+      const profit = currentValue !== null ? currentValue - costs : null;
       const returnOnInvestment =
         currentValue !== null ? (profit / costs) * 100 : null;
 

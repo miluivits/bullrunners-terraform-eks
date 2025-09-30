@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useUser } from "../../../context/UserContext";
 import "./LeftDetails.css";
 
-export default function LeftDetails({ detailedData, portfolio, setPortfolio, user }) {
-
+export default function LeftDetails({ detailedData, portfolio, setPortfolio }) {
+  const { user } = useUser();
   const [isAddingToPortfolio, setIsAddingToPortfolio] = useState(false);
   const [amount, setAmount] = useState("");
 
@@ -16,45 +17,45 @@ export default function LeftDetails({ detailedData, portfolio, setPortfolio, use
       return;
     }
 
-    if (!user || !user.username) {
+    if (!user?.username) {
       alert("You must be logged in to add tokens.");
       return;
     }
-  
+
     try {
       const newAmount = parseFloat(amount);
-      const tokenName = detailedData.id; 
-  
-      const tokenExists = portfolio.find(token => token.name === tokenName);
-  
+      const tokenName = detailedData.id;
+      const price = detailedData.market_data.current_price.usd;
+
+      const safePortfolio = Array.isArray(portfolio) ? portfolio : [];
+      const tokenExists = safePortfolio.find(token => token.name === tokenName);
+
       let updatedPortfolio;
       if (tokenExists) {
-    
-        updatedPortfolio = portfolio.map(token =>
+        updatedPortfolio = safePortfolio.map(token =>
           token.name === tokenName
-            ? { ...token, amount: token.amount + newAmount, value: (token.amount + newAmount) * token.price }
+            ? { ...token, amount: token.amount + newAmount, value: (token.amount + newAmount) * (token.price || price) }
             : token
         );
       } else {
-        const price = detailedData.market_data.current_price.usd;
-        const value = price * newAmount;
-        const newToken = { name: tokenName, amount: newAmount, price, value };
-        updatedPortfolio = [...portfolio, newToken];
+        const newToken = { name: tokenName, amount: newAmount, price, value: newAmount * price };
+        updatedPortfolio = [...safePortfolio, newToken];
       }
-  
+
       setPortfolio(updatedPortfolio);
-  
+
       const response = await fetch("/api/add-token", {
-        method: "PATCH",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: user.username,
           token: { name: tokenName, amount: newAmount },
         }),
+        credentials: "include",
       });
-  
+
       if (!response.ok) throw new Error("Failed to update backend");
-  
+
       alert(`${detailedData.name} successfully added with amount: ${amount}`);
       setIsAddingToPortfolio(false);
       setAmount("");
@@ -63,6 +64,7 @@ export default function LeftDetails({ detailedData, portfolio, setPortfolio, use
       alert("An error occurred while adding the token.");
     }
   }
+
   function handleCancelAdd() {
     setIsAddingToPortfolio(false);
     setAmount("");
@@ -117,21 +119,48 @@ export default function LeftDetails({ detailedData, portfolio, setPortfolio, use
         <div className="info">
           <h2>Info</h2>
           <p>
-            <strong>Website:</strong> <a href={detailedData?.links?.homepage[0]} target="_blank" rel="noopener noreferrer">{detailedData?.links?.homepage[0]}</a>
+            <strong>Website:</strong>{" "}
+            <a href={detailedData?.links?.homepage[0]} target="_blank" rel="noopener noreferrer">
+              {detailedData?.links?.homepage[0]}
+            </a>
           </p>
           <p>
-            <strong>Explorers:</strong> <a href={detailedData?.links?.blockchain_site[0]} target="_blank" rel="noopener noreferrer">View on Explorer</a>
+            <strong>Explorers:</strong>{" "}
+            <a
+              href={detailedData?.links?.blockchain_site[0]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Explorer
+            </a>
           </p>
           <p>
-            <strong>Wallets:</strong> <a href="#">Ledger</a>
+            <strong>Community:</strong>{" "}
+            <a
+              href={detailedData?.links?.twitter_screen_name ? `https://twitter.com/${detailedData.links.twitter_screen_name}` : "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Twitter
+            </a>{" "}
+            |{" "}
+            <a
+              href={detailedData?.links?.telegram_channel_identifier ? `https://t.me/${detailedData.links.telegram_channel_identifier}` : "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Telegram
+            </a>
           </p>
           <p>
-            <strong>Community:</strong>
-            <a href={detailedData?.links?.twitter_screen_name ? `https://twitter.com/${detailedData.links.twitter_screen_name}` : "#"} target="_blank" rel="noopener noreferrer"> Twitter</a> |
-            <a href={detailedData?.links?.telegram_channel_identifier ? `https://t.me/${detailedData.links.telegram_channel_identifier}` : "#"} target="_blank" rel="noopener noreferrer"> Telegram</a>
-          </p>
-          <p>
-            <strong>Source Code:</strong> <a href={detailedData?.links?.repos_url?.github[0]} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <strong>Source Code:</strong>{" "}
+            <a
+              href={detailedData?.links?.repos_url?.github[0]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
           </p>
           <p>
             <strong>API ID:</strong> {detailedData?.id}
@@ -140,11 +169,7 @@ export default function LeftDetails({ detailedData, portfolio, setPortfolio, use
             <strong>Category:</strong> {detailedData?.categories[0]}
           </p>
         </div>
-
       </div>
     </div>
   );
 }
-
-
-
