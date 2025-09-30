@@ -1,0 +1,169 @@
+.cryptocurrencies-page {
+  padding: 3rem 2rem;
+  color: #fff;
+  background: radial-gradient(circle at top, #0d0d0d, #000 70%);
+  min-height: 80vh;
+}
+
+.cryptooverview {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: rgba(20, 20, 20, 0.9);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(76, 187, 113, 0.2);
+}
+
+.cryptooverview h2 {
+  color: #4cbb71;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.cryptooverview p {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.overview-card {
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.overview-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(76, 187, 113, 0.3);
+}
+
+.overview-card h3 {
+  color: #aaa;
+  margin-bottom: 0.8rem;
+}
+
+.overview-card p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.green {
+  color: #00ff88;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.red {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.change-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  margin-left: 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.change-badge.green {
+  background-color: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+}
+
+.change-badge.red {
+  background-color: rgba(255, 77, 77, 0.15);
+  color: #ff4d4d;
+}
+
+.cryptotable {
+  margin-top: 3rem;
+  background: rgba(20, 20, 20, 0.95);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(76, 187, 113, 0.2);
+  overflow-x: auto;
+}
+
+.cryptotable h2 {
+  color: #4cbb71;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.cryptotable table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.cryptotable th,
+.cryptotable td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cryptotable th {
+  color: #aaa;
+  font-weight: 600;
+}
+
+.cryptotable tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.coin-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coin-name img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.coin-title {
+  font-weight: 600;
+}
+
+.coin-symbol {
+  color: #888;
+  margin-left: 4px;
+  font-size: 0.85rem;
+}
+
+.change-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.change-badge.green {
+  background-color: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+}
+
+.change-badge.red {
+  background-color: rgba(255, 77, 77, 0.15);
+  color: #ff4d4d;
+}

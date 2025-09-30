@@ -1,0 +1,223 @@
+/* Betöltés szöveg */
+.portfolio-page {
+  margin-top: 5px;
+}
+
+.loading-text {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 5rem;
+  color: #4cbb71;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Marketing oldal */
+.marketing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  color: #ffffff;
+  text-align: center;
+  padding: 2rem;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #0d0d0d, #111111, #0d1f0d);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.marketing-page h1 {
+  font-size: 3.5rem;
+  color: #4cbb71;
+  text-shadow: 0 4px 15px rgba(76, 187, 113, 0.6);
+}
+
+.marketing-page p {
+  font-size: 1.4rem;
+  color: #cccccc;
+  max-width: 700px;
+}
+
+.cta-button {
+  margin-top: 2rem;
+  padding: 1rem 3rem;
+  background: linear-gradient(90deg, #4cbb71, #2e8b57);
+  color: #0d0d0d;
+  font-weight: bold;
+  border-radius: 15px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(76, 187, 113, 0.3);
+}
+
+.cta-button:hover {
+  background: linear-gradient(90deg, #3aa15a, #206b43);
+  transform: scale(1.08);
+  box-shadow: 0 12px 25px rgba(76, 187, 113, 0.5);
+}
+
+/* Portfolio oldal */
+.portfolio-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  min-height: 80vh;
+  color: #ffffff;
+  background: radial-gradient(circle at top, #0d0d0d, #000000 70%);
+}
+
+.portfolio-page h1 {
+  font-size: 2.8rem;
+  color: #4cbb71;
+  margin-bottom: 2rem;
+  text-shadow: 0 3px 12px rgba(76, 187, 113, 0.5);
+}
+
+/* Summary section */
+.portfolio-summary {
+  width: 100%;
+  max-width: 1100px;
+  margin-bottom: 3rem;
+  background: rgba(15, 15, 15, 0.9);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(76, 187, 113, 0.1);
+}
+
+.portfolio-summary h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #4cbb71;
+  text-align: center;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.summary-card {
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(76, 187, 113, 0.3);
+}
+
+.summary-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  color: #aaa;
+}
+
+.summary-card p {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.big-value {
+  font-size: 1.8rem;
+  color: #4cbb71;
+  text-shadow: 0 2px 10px rgba(76, 187, 113, 0.4);
+}
+
+/* Chart section */
+.portfolio-chart {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: rgba(20, 20, 20, 0.85);
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(76, 187, 113, 0.15);
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-chart:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 50px rgba(76, 187, 113, 0.25);
+}
+
+.portfolio-chart h2 {
+  text-align: center;
+  color: #4cbb71;
+  margin-bottom: 1rem;
+}
+
+/* Token list section */
+.portfolio-list {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 3rem;
+}
+
+.portfolio-list h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #4cbb71;
+  text-align: center;
+}
+
+.token-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.token-row {
+  display: grid;
+  grid-template-columns: 60px repeat(6, 1fr);
+  align-items: center;
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 12px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.token-row.header {
+  background: #2a2a2a;
+  font-weight: bold;
+  color: #4cbb71;
+}
+
+.token-row:hover {
+  background: #222;
+  transform: translateY(-3px);
+}
+
+.token-img {
+  width: 35px;
+  height: 35px;
+}
+
+.green {
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.red {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+.summary-card .green {
+  color: #00ff88;
+}
+
+.summary-card .red {
+  color: #ff4d4d;
+}

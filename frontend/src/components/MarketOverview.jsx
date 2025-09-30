@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import "./MarketOverview.css";
 
 export default function MarketOverview() {
@@ -32,14 +33,20 @@ export default function MarketOverview() {
 
       <div className="market-cards">
         {tokens.map((token) => (
-          <div key={token.id} className="market-card">
-            <img src={token.image} alt={token.name} className="token-logo" />
-            <p className="token-name">{token.name}</p>
-            <p className="token-price">${token.current_price.toLocaleString()}</p>
-            <p className={`token-change ${token.price_change_percentage_24h >= 0 ? "up" : "down"}`}>
-              {token.price_change_percentage_24h.toFixed(2)}%
-            </p>
-          </div>
+          <Link
+            key={token.id}
+            to={`/tokendetails/${token.id}`}
+            className="market-card-link"
+          >
+            <div className="market-card">
+              <img src={token.image} alt={token.name} className="token-logo" />
+              <p className="token-name">{token.name}</p>
+              <p className="token-price">${token.current_price.toLocaleString()}</p>
+              <p className={`token-change ${token.price_change_percentage_24h >= 0 ? "up" : "down"}`}>
+                {token.price_change_percentage_24h.toFixed(2)}%
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
