@@ -8,9 +8,9 @@ import { useUser } from "../../../context/UserContext";
 
 export default function TokenDetails() {
   const { tokenId } = useParams();
-  const { user } = useUser(); // bejelentkezett user a contextből
+  const { user } = useUser();
   const [detailedData, setDetailedData] = useState(null);
-  const [portfolio, setPortfolio] = useState([]); // <- hozzáadva
+  const [portfolio, setPortfolio] = useState([]);
 
   useEffect(() => {
     if (!tokenId) return;
@@ -21,13 +21,11 @@ export default function TokenDetails() {
         if (cached) {
           setDetailedData(JSON.parse(cached));
         } else {
-          const response = await fetch(
-            `https://api.coingecko.com/api/v3/coins/${tokenId}`,
-            {
-              headers: { "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK" },
-            }
-          );
-          if (!response.ok) throw new Error("Failed to fetch token");
+          // Backend endpoint használata (Coin függvény)
+          const response = await fetch(`/api/coins/${tokenId}`, {
+            credentials: "include", // ha kell auth cookie
+          });
+          if (!response.ok) throw new Error("Failed to fetch token from backend");
           const data = await response.json();
           sessionStorage.setItem(`token-${tokenId}`, JSON.stringify(data));
           setDetailedData(data);
