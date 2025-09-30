@@ -5,28 +5,14 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import "./Portfolio.css";
 
 const COLORS = [
-    "#4cbb71",
-    "#ff6b6b",
-    "#feca57",
-    "#54a0ff",
-    "#ff9ff3",
-    "#00d2d3",
-    "#5f27cd",
-    "#01a3a4",
-    "#ff793f",
-    "#2f3542",
-    "#1e90ff",
-    "#f368e0",
+    "#4cbb71", "#ff6b6b", "#feca57", "#54a0ff", "#ff9ff3",
+    "#00d2d3", "#5f27cd", "#01a3a4", "#ff793f", "#2f3542", "#1e90ff", "#f368e0",
 ];
 
 function formatMarketCap(num) {
-    if (num >= 1_000_000_000_000) {
-        return `$${(num / 1_000_000_000_000).toFixed(2)}T`;
-    } else if (num >= 1_000_000_000) {
-        return `$${(num / 1_000_000_000).toFixed(2)}B`;
-    } else if (num >= 1_000_000) {
-        return `$${(num / 1_000_000).toFixed(2)}M`;
-    }
+    if (num >= 1_000_000_000_000) return `$${(num / 1_000_000_000_000).toFixed(2)}T`;
+    if (num >= 1_000_000_000) return `$${(num / 1_000_000_000).toFixed(2)}B`;
+    if (num >= 1_000_000) return `$${(num / 1_000_000).toFixed(2)}M`;
     return `$${num.toLocaleString()}`;
 }
 
@@ -38,44 +24,31 @@ export default function Portfolio() {
 
     useEffect(() => {
         const fetchPortfolio = async () => {
+            if (!user?.username) return;
+
             try {
-                const res = await fetch(`/api/portfolio/${user.username}`);
-                const portfolioTokens = await res.json();
-
-                if (!portfolioTokens.length) return;
-
-                const ids = portfolioTokens.map((t) => t.name.toLowerCase()).join(",");
-
-                const priceRes = await fetch(
-                    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}`
-                );
-                const priceData = await priceRes.json();
-
-                const enriched = portfolioTokens.map((t) => {
-                    const market = priceData.find((m) => m.id === t.name.toLowerCase());
-                    const usdValue = market ? t.amount * market.current_price : 0;
-                    return {
-                        ...t,
-                        price: market?.current_price || 0,
-                        usdValue,
-                        image: market?.image || "",
-                        change24h: market?.price_change_percentage_24h || 0,
-                        marketCap: market?.market_cap || 0,
-                    };
+                const res = await fetch(`/api/portfolio/${user.username}`, {
+                    credentials: "include",
                 });
+                if (!res.ok) throw new Error("Failed to fetch portfolio");
+                const data = await res.json();
 
-                const total = enriched.reduce((acc, t) => acc + t.usdValue, 0);
-                const top = enriched.reduce((a, b) => (a.usdValue > b.usdValue ? a : b));
+                if (!data.holdings || !data.holdings.length) return;
 
-                setTokens(enriched);
-                setTotalValue(total);
+                setTokens(data.holdings);
+                setTotalValue(data.totals.value || 0);
+
+                const top = data.holdings.reduce(
+                    (a, b) => (a.currentValue > b.currentValue ? a : b),
+                    data.holdings[0]
+                );
                 setHighestToken(top);
-            } catch (error) {
-                console.error("Error fetching portfolio:", error);
+            } catch (err) {
+                console.error("Error fetching portfolio:", err);
             }
         };
 
-        if (user) fetchPortfolio();
+        fetchPortfolio();
     }, [user]);
 
     if (loading) return <p className="loading-text">Loading...</p>;
@@ -85,9 +58,7 @@ export default function Portfolio() {
             <div className="marketing-page">
                 <h1>Welcome!</h1>
                 <p>Track your tokens, monitor your gains, and level up your crypto game!</p>
-                <Link to="/register" className="cta-button">
-                    Register Now
-                </Link>
+                <Link to="/register" className="cta-button">Register Now</Link>
             </div>
         );
     }
@@ -108,27 +79,18 @@ export default function Portfolio() {
                     <div className="summary-card">
                         <h3>Top Holding</h3>
                         {highestToken ? (
-                            <p>
-                                {highestToken.name} (${highestToken.usdValue.toLocaleString()})
-                            </p>
-                        ) : (
-                            <p>-</p>
-                        )}
+                            <p>{highestToken.name} (${highestToken.currentValue.toLocaleString()})</p>
+                        ) : (<p>-</p>)}
                     </div>
                     <div className="summary-card">
                         <h3>Average 24h Change</h3>
                         {(() => {
                             const avgChange = tokens.length
-                                ? tokens.reduce((acc, t) => acc + t.change24h, 0) / tokens.length
+                                ? tokens.reduce((acc, t) => acc + (t.change24h || 0), 0) / tokens.length
                                 : 0;
-                            return (
-                                <p className={avgChange >= 0 ? "green" : "red"}>
-                                    {avgChange.toFixed(2)}%
-                                </p>
-                            );
+                            return <p className={avgChange >= 0 ? "green" : "red"}>{avgChange.toFixed(2)}%</p>;
                         })()}
                     </div>
-
                 </div>
             </section>
 
@@ -137,22 +99,18 @@ export default function Portfolio() {
                 <PieChart width={700} height={400}>
                     <Pie
                         data={tokens}
-                        dataKey="usdValue"
+                        dataKey="currentValue"
                         nameKey="name"
                         cx="50%"
                         cy="50%"
                         outerRadius={150}
-                        label={({ name, value }) =>
-                            `${name}: $${Math.round(value).toLocaleString()}`
-                        }
+                        label={({ name, value }) => `${name}: $${Math.round(value).toLocaleString()}`}
                     >
                         {tokens.map((_, index) => (
                             <Cell key={index} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
-                    <Tooltip
-                        formatter={(value, name) => [`$${value.toLocaleString()}`, name]}
-                    />
+                    <Tooltip formatter={(value, name) => [`$${value.toLocaleString()}`, name]} />
                     <Legend />
                 </PieChart>
             </section>
@@ -171,17 +129,13 @@ export default function Portfolio() {
                     </div>
                     {tokens.map((t) => (
                         <div className="token-row" key={t.name}>
-                            <span>
-                                <img src={t.image} alt={t.name} className="token-img" />
-                            </span>
+                            <span><img src={t.image} alt={t.name} className="token-img" /></span>
                             <span>{t.name}</span>
                             <span>{t.amount}</span>
-                            <span>${t.price.toLocaleString()}</span>
-                            <span>${t.usdValue.toLocaleString()}</span>
-                            <span className={t.change24h >= 0 ? "green" : "red"}>
-                                {t.change24h.toFixed(2)}%
-                            </span>
-                            <span>{formatMarketCap(t.marketCap)}</span>
+                            <span>${t.currentPrice?.toLocaleString()}</span>
+                            <span>${t.currentValue?.toLocaleString()}</span>
+                            <span className={t.change24h >= 0 ? "green" : "red"}>{(t.change24h || 0).toFixed(2)}%</span>
+                            <span>{formatMarketCap(t.marketCap || 0)}</span>
                         </div>
                     ))}
                 </div>
