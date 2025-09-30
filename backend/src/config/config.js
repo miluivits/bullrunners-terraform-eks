@@ -6,7 +6,7 @@ function parsePort(value, fallback) {
 }
 
 export const config = {
-  port: parsePort(process.env.PORT || localConfig.PORT || 3005),
+  port: parsePort(process.env.PORT, localConfig.PORT ?? 3005),
   mongoUri:
     process.env.MONGO_URI ||
     localConfig.MONGO_URI ||
