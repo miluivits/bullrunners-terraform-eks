@@ -3,16 +3,14 @@ import { useUser } from "../../../context/UserContext";
 import "./LeftDetails.css";
 
 export default function LeftDetails({ detailedData, portfolio, setPortfolio }) {
-  const { user } = useUser(); // a bejelentkezett user a contextből jön
+  const { user } = useUser();
   const [isAddingToPortfolio, setIsAddingToPortfolio] = useState(false);
   const [amount, setAmount] = useState("");
 
-  // Gomb megnyomásra input form
   function handleAddToPortfolio() {
     setIsAddingToPortfolio(true);
   }
 
-  // Hozzáadás megerősítése
   async function handleConfirmAdd() {
     if (!amount || isNaN(amount) || amount <= 0) {
       alert("Please enter a valid amount.");
@@ -29,26 +27,23 @@ export default function LeftDetails({ detailedData, portfolio, setPortfolio }) {
       const tokenName = detailedData.id;
       const price = detailedData.market_data.current_price.usd;
 
-      // Ellenőrizzük, hogy már van-e token a portfólióban
-      const tokenExists = portfolio.find(token => token.name === tokenName);
-      let updatedPortfolio;
+      const safePortfolio = Array.isArray(portfolio) ? portfolio : [];
+      const tokenExists = safePortfolio.find(token => token.name === tokenName);
 
+      let updatedPortfolio;
       if (tokenExists) {
-        updatedPortfolio = portfolio.map(token =>
+        updatedPortfolio = safePortfolio.map(token =>
           token.name === tokenName
             ? { ...token, amount: token.amount + newAmount, value: (token.amount + newAmount) * (token.price || price) }
             : token
         );
       } else {
-        const value = price * newAmount;
-        const newToken = { name: tokenName, amount: newAmount, price, value };
-        updatedPortfolio = [...portfolio, newToken];
+        const newToken = { name: tokenName, amount: newAmount, price, value: newAmount * price };
+        updatedPortfolio = [...safePortfolio, newToken];
       }
 
-      // Frissítjük a local state-et
       setPortfolio(updatedPortfolio);
 
-      // Backend frissítése
       const response = await fetch("/api/add-token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -56,7 +51,7 @@ export default function LeftDetails({ detailedData, portfolio, setPortfolio }) {
           username: user.username,
           token: { name: tokenName, amount: newAmount },
         }),
-        credentials: "include", // fontos a cookie
+        credentials: "include",
       });
 
       if (!response.ok) throw new Error("Failed to update backend");
@@ -70,7 +65,6 @@ export default function LeftDetails({ detailedData, portfolio, setPortfolio }) {
     }
   }
 
-  // Hozzáadás megszakítása
   function handleCancelAdd() {
     setIsAddingToPortfolio(false);
     setAmount("");
