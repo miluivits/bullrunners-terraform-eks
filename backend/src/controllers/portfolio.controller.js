@@ -1,5 +1,5 @@
 import User from "../model/User.js";
-import { getUsdPrice } from "../utils/getPrice.js";
+import { getUsdPrice, getUsdPrices } from "../utils/getPrice.js";
 
 export async function AddToken(req, res) {
   try {
@@ -52,7 +52,62 @@ export async function UserPortfolio(req, res) {
   try {
     const user = await User.findOne({ username: req.params.username });
     if (!user) return res.status(404).json({ error: "User not found" });
-    res.json(user.tokens || []);
+
+    const tokens = user.tokens || [];
+    const ids = tokens.map((token) => token.name.toLowerCase());
+    const prices = await getUsdPrices(ids);
+
+    const holdings = tokens.map((token) => {
+      const name = token.name.toLowerCase();
+      const amount = Number(token.amount) || 0;
+      const avg = Number(token.avgBuyPrice) || 0;
+
+      const costs = avg * amount;
+      const currentPrice = prices[name] ?? null;
+      const currentValue = currentPrice !== null ? currentPrice * amount : null;
+      const profit = currentValue !== null ? currentValue - invested : null;
+      const returnOnInvestment =
+        currentValue !== null ? (profit / costs) * 100 : null;
+
+      return {
+        name: token.name,
+        symbol: token.symbol ?? null,
+        amount,
+        avgBuyPrice: avg,
+        lastBuyPrice: token.lastBuyPrice ?? null,
+        firstBuyAt: token.firstBuyAt ?? null,
+        lastBuyAt: token.lastBuyAt ?? null,
+        currentPrice,
+        currentValue,
+        costs,
+        unrealizedProfit: profit,
+        returnOnInvestment,
+      };
+    });
+
+    const totals = holdings.reduce(
+      (acc, holding) => {
+        acc.costs += holding.costs || 0;
+        acc.value += holding.currentValue || 0;
+        return acc;
+      },
+      { costs: 0, value: 0 }
+    );
+
+    const totalProfit = totals.value - totals.costs;
+    const totalReturnOnInvestment =
+      totals.costs > 0 ? (totalProfit / totals.costs) * 100 : null;
+
+    return res.json({
+      username: user.username,
+      holdings,
+      totals: {
+        costs: totals.costs,
+        value: totals.value,
+        unrealizedProfit: totalProfit,
+        returnOnInvestment: totalReturnOnInvestment,
+      },
+    });
   } catch (err) {
     console.error("Error fetching user portfolio:", err);
     res.status(500).json({ error: "Internal Server Error" });
