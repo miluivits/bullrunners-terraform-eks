@@ -12,7 +12,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch(`/api/me`, {
+        const response = await fetch(`/api/user`, {
           credentials: "include", 
         });
 
