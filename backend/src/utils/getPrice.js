@@ -1,4 +1,4 @@
-import { config } from "../config/config.js";
+import { config } from "../config/config";
 
 export async function getUsdPrice(coinId) {
   const response = await fetch(
