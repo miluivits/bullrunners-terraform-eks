@@ -75,7 +75,7 @@ export function UserProvider({ children }) {
 
   async function logout() {
     try {
-      await fetch(`${BACKEND_URL}/api/logout`, {
+      await fetch(`/api/logout`, {
         method: "POST",
         credentials: "include",
       });
