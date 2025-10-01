@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Cryptocurrencies.css";
+import { Link } from "react-router-dom";
 
 export default function Cryptocurrencies() {
   const [globalData, setGlobalData] = useState(null);
@@ -70,9 +71,11 @@ export default function Cryptocurrencies() {
               <tr key={coin.id}>
                 <td>{index + 1}</td>
                 <td className="coin-name">
-                  <img src={coin.image ?? ""} alt={coin.name ?? ""} />
-                  <span className="coin-title">{coin.name ?? "-"}</span>
-                  <span className="coin-symbol">· {coin.symbol?.toUpperCase() ?? "-"}</span>
+                  <Link to={`/tokendetails/${coin.id}`} className="coin-link">
+                    <img src={coin.image ?? ""} alt={coin.name ?? ""} />
+                    <span className="coin-title">{coin.name ?? "-"}</span>
+                    <span className="coin-symbol">· {coin.symbol?.toUpperCase() ?? "-"}</span>
+                  </Link>
                 </td>
                 <td>
                   <span className={`change-badge ${coin.price_change_percentage_1h_in_currency >= 0 ? "green" : "red"}`}>

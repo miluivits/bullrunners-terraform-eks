@@ -167,3 +167,74 @@
   background-color: rgba(255, 77, 77, 0.15);
   color: #ff4d4d;
 }
+
+.coin-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Tablet és kisebb kijelzők */
+@media (max-width: 768px) {
+  .cryptocurrencies-page {
+    padding: 2rem 1rem;
+  }
+
+  .cryptooverview {
+    padding: 1.5rem;
+  }
+
+  .cryptooverview h2 {
+    font-size: 1.6rem;
+  }
+
+  .cryptooverview p {
+    font-size: 1rem;
+  }
+
+  .cryptotable {
+    padding: 1rem;
+  }
+
+  .cryptotable table {
+    font-size: 0.85rem;
+    /* kicsit kisebb betűméret */
+  }
+
+  .coin-name img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .coin-name {
+    display: flex;
+    align-items: center;
+    /* minden elem középre kerül a cellában */
+    gap: 8px;
+    position: relative;
+    top: 3.5px; 
+  }
+
+  .coin-link {
+    display: flex;
+    align-items: center;
+    /* biztosan középre */
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .coin-title,
+  .coin-symbol {
+    display: inline-block;
+    line-height: 1;
+    /* fix sor-magasság */
+    vertical-align: middle;
+    /* középre */
+  }
+
+
+
+}
