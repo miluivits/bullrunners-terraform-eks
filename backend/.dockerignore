@@ -2,5 +2,4 @@ node_modules
 .git
 Dockerfile
 .dockerignore
-config.local.js
 config.local.example.js
